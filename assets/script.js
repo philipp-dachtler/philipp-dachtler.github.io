@@ -37,6 +37,8 @@ const lCategorySelect = document.createElement('select');
 const lCategoryAddBtn = document.createElement('button');
 
 let currentUser = null;
+let personalChannel = null;
+let localItems = {};
 
 navButtons.forEach(btn => {
 	btn.addEventListener('click', () => {
@@ -62,17 +64,38 @@ loginBtn.addEventListener('click', () => {
 
 logoutBtn.addEventListener('click', () => supabase.auth.signOut());
 
-supabase.auth.onAuthStateChange((_, session) => {
+supabase.auth.onAuthStateChange((event, session) => {
 	if (session?.user) {
 		currentUser = session.user;
 		showProfile(session.user);
 		loadPersonal();
 		document.querySelector('[data-sec="personal"]').click();
+
+		// Realtime-Abonnement für persönliche Liste
+		if (personalChannel) {
+			supabase.removeChannel(personalChannel);
+		}
+
+		personalChannel = supabase.channel(`personal-${session.user.id}`)
+			.on('postgres_changes', {
+				event: 'UPDATE',
+				schema: 'public',
+				table: 'personal',
+				filter: `user_id=eq.${session.user.id}`
+			}, () => loadPersonal())
+			.subscribe();
+
 	} else {
 		currentUser = null;
 		hideProfile();
 		sections.profile.classList.add('active');
 		navButtons[2].classList.add('active');
+
+		// Channel beenden bei Abmeldung
+		if (personalChannel) {
+			supabase.removeChannel(personalChannel);
+			personalChannel = null;
+		}
 	}
 });
 
@@ -81,15 +104,24 @@ supabase.auth.onAuthStateChange((_, session) => {
 		data: {
 			session
 		}
-	}
-
-	= await supabase.auth.getSession();
+	} = await supabase.auth.getSession();
 
 	if (session?.user) {
 		currentUser = session.user;
 		showProfile(session.user);
 		loadPersonal();
 		document.querySelector('[data-sec="personal"]').click();
+
+		// Realtime-Abonnement initialisieren
+		personalChannel = supabase.channel(`personal-${session.user.id}`)
+			.on('postgres_changes', {
+				event: 'UPDATE',
+				schema: 'public',
+				table: 'personal',
+				filter: `user_id=eq.${session.user.id}`
+			}, () => loadPersonal())
+			.subscribe();
+
 	} else {
 		sections.profile.classList.add('active');
 		navButtons[2].classList.add('active');
@@ -245,14 +277,10 @@ async function addPersonalCategory() {
 		const {
 			data,
 			error
-		}
-
-		= await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
+		} = await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
 		if (error) throw error;
 
-		let items = data?.items || {}
-
-		;
+		let items = data?.items || {};
 
 		if (items[name]) {
 			alert('Kategorie existiert bereits!');
@@ -263,9 +291,7 @@ async function addPersonalCategory() {
 
 		const {
 			error: updateError
-		}
-
-		= await supabase.from('personal').update({
+		} = await supabase.from('personal').update({
 			items
 		}).eq('user_id', currentUser.id);
 		if (updateError) throw updateError;
@@ -284,9 +310,7 @@ window.editPersonalCategory = async (oldName) => {
 		const {
 			data,
 			error
-		}
-
-		= await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
+		} = await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
 		if (error) throw error;
 
 		let items = data.items;
@@ -301,9 +325,7 @@ window.editPersonalCategory = async (oldName) => {
 
 		const {
 			error: updateError
-		}
-
-		= await supabase.from('personal').update({
+		} = await supabase.from('personal').update({
 			items
 		}).eq('user_id', currentUser.id);
 		if (updateError) throw updateError;
@@ -312,9 +334,7 @@ window.editPersonalCategory = async (oldName) => {
 	} catch (error) {
 		console.error(error);
 	}
-}
-
-;
+};
 
 window.deletePersonalCategory = async (category) => {
 	if (!confirm(`Möchtest du die Kategorie "${category}" und alle ihre Einträge löschen?`)) return;
@@ -323,9 +343,7 @@ window.deletePersonalCategory = async (category) => {
 		const {
 			data,
 			error
-		}
-
-		= await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
+		} = await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
 		if (error) throw error;
 
 		let items = data.items;
@@ -333,9 +351,7 @@ window.deletePersonalCategory = async (category) => {
 
 		const {
 			error: updateError
-		}
-
-		= await supabase.from('personal').update({
+		} = await supabase.from('personal').update({
 			items
 		}).eq('user_id', currentUser.id);
 		if (updateError) throw updateError;
@@ -344,17 +360,13 @@ window.deletePersonalCategory = async (category) => {
 	} catch (error) {
 		console.error(error);
 	}
-}
-
-;
+};
 
 window.editPersonalItem = async (category, idx) => {
 	const {
 		data,
 		error
-	}
-
-	= await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
+	} = await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
 	if (error) return;
 
 	const items = data.items;
@@ -365,17 +377,13 @@ window.editPersonalItem = async (category, idx) => {
 
 	const {
 		error: updateError
-	}
-
-	= await supabase.from('personal').update({
+	} = await supabase.from('personal').update({
 		items
 	}).eq('user_id', currentUser.id);
 	if (updateError) return;
 
 	loadPersonal();
-}
-
-;
+};
 
 async function addPersonalItem() {
 	const name = pInput.value.trim();
@@ -388,14 +396,10 @@ async function addPersonalItem() {
 		const {
 			data,
 			error
-		}
-
-		= await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
+		} = await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
 		if (error) throw error;
 
-		let items = data?.items || {}
-
-		;
+		let items = data?.items || {};
 		if (!items[category]) items[category] = [];
 
 		items[category].push({
@@ -405,9 +409,7 @@ async function addPersonalItem() {
 
 		const {
 			error: updateError
-		}
-
-		= await supabase.from('personal').update({
+		} = await supabase.from('personal').update({
 			items
 		}).eq('user_id', currentUser.id);
 		if (updateError) throw updateError;
@@ -424,18 +426,14 @@ window.togglePersonal = async (category, idx) => {
 		const {
 			data,
 			error
-		}
-
-		= await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
+		} = await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
 		if (error) throw error;
 
 		data.items[category][idx].done = !data.items[category][idx].done;
 
 		const {
 			error: updateError
-		}
-
-		= await supabase.from('personal').update({
+		} = await supabase.from('personal').update({
 			items: data.items
 		}).eq('user_id', currentUser.id);
 		if (updateError) throw updateError;
@@ -444,18 +442,14 @@ window.togglePersonal = async (category, idx) => {
 	} catch (error) {
 		console.error(error);
 	}
-}
-
-;
+};
 
 window.removePersonal = async (category, idx) => {
 	try {
 		const {
 			data,
 			error
-		}
-
-		= await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
+		} = await supabase.from('personal').select('items').eq('user_id', currentUser.id).single();
 		if (error) throw error;
 
 		data.items[category].splice(idx, 1);
@@ -466,9 +460,7 @@ window.removePersonal = async (category, idx) => {
 
 		const {
 			error: updateError
-		}
-
-		= await supabase.from('personal').update({
+		} = await supabase.from('personal').update({
 			items: data.items
 		}).eq('user_id', currentUser.id);
 		if (updateError) throw updateError;
@@ -477,27 +469,21 @@ window.removePersonal = async (category, idx) => {
 	} catch (error) {
 		console.error(error);
 	}
-}
-
-;
+};
 
 function loadLocalList() {
 	const saved = localStorage.getItem('localShoppingList');
+	localItems = saved ? JSON.parse(saved) : {};
 
-	let items = saved ? JSON.parse(saved) : {}
-
-	;
-
-	if (Array.isArray(items)) {
-		items = {
-			"Allgemein": items
-		}
-
-		;
-		saveLocalList(items);
+	// Migration von alter Struktur
+	if (Array.isArray(localItems)) {
+		localItems = {
+			"Allgemein": localItems
+		};
+		saveLocalList(localItems);
 	}
 
-	renderLocalList(items);
+	renderLocalList(localItems);
 }
 
 function renderLocalList(items) {
@@ -571,6 +557,7 @@ function renderLocalList(items) {
 }
 
 function saveLocalList(items) {
+	localItems = items;
 	localStorage.setItem('localShoppingList', JSON.stringify(items));
 	renderLocalList(items);
 }
@@ -597,9 +584,7 @@ function addLocalCategory() {
 
 	const saved = localStorage.getItem('localShoppingList');
 
-	let items = saved ? JSON.parse(saved) : {}
-
-	;
+	let items = saved ? JSON.parse(saved) : {};
 
 	if (items[name]) {
 		alert('Kategorie existiert bereits!');
@@ -616,9 +601,7 @@ window.editLocalCategory = (oldName) => {
 
 	const saved = localStorage.getItem('localShoppingList');
 
-	let items = saved ? JSON.parse(saved) : {}
-
-	;
+	let items = saved ? JSON.parse(saved) : {};
 
 	if (items[newName]) {
 		alert('Kategorie existiert bereits!');
@@ -628,40 +611,30 @@ window.editLocalCategory = (oldName) => {
 	items[newName] = items[oldName];
 	delete items[oldName];
 	saveLocalList(items);
-}
-
-;
+};
 
 window.deleteLocalCategory = (category) => {
 	if (!confirm(`Möchtest du die Kategorie "${category}" und alle ihre Einträge löschen?`)) return;
 
 	const saved = localStorage.getItem('localShoppingList');
 
-	let items = saved ? JSON.parse(saved) : {}
-
-	;
+	let items = saved ? JSON.parse(saved) : {};
 
 	delete items[category];
 	saveLocalList(items);
-}
-
-;
+};
 
 window.editLocalItem = (category, idx) => {
 	const saved = localStorage.getItem('localShoppingList');
 
-	let items = saved ? JSON.parse(saved) : {}
-
-	;
+	let items = saved ? JSON.parse(saved) : {};
 
 	const newName = prompt('Neuer Artikelname:', items[category][idx].name);
 	if (!newName) return;
 
 	items[category][idx].name = newName;
 	saveLocalList(items);
-}
-
-;
+};
 
 function addLocalItem() {
 	const name = lInput.value.trim();
@@ -672,9 +645,7 @@ function addLocalItem() {
 
 	const saved = localStorage.getItem('localShoppingList');
 
-	let items = saved ? JSON.parse(saved) : {}
-
-	;
+	let items = saved ? JSON.parse(saved) : {};
 
 	if (!items[category]) items[category] = [];
 
@@ -690,22 +661,16 @@ function addLocalItem() {
 window.toggleLocal = (category, idx) => {
 	const saved = localStorage.getItem('localShoppingList');
 
-	let items = saved ? JSON.parse(saved) : {}
-
-	;
+	let items = saved ? JSON.parse(saved) : {};
 
 	items[category][idx].done = !items[category][idx].done;
 	saveLocalList(items);
-}
-
-;
+};
 
 window.removeLocal = (category, idx) => {
 	const saved = localStorage.getItem('localShoppingList');
 
-	let items = saved ? JSON.parse(saved) : {}
-
-	;
+	let items = saved ? JSON.parse(saved) : {};
 
 	items[category].splice(idx, 1);
 
@@ -714,14 +679,10 @@ window.removeLocal = (category, idx) => {
 	}
 
 	saveLocalList(items);
-}
-
-;
+};
 
 exportBtn.addEventListener('click', () => {
-	const items = JSON.parse(localStorage.getItem('localShoppingList')) || {}
-
-	;
+	const items = JSON.parse(localStorage.getItem('localShoppingList')) || {};
 	const jsonStr = JSON.stringify(items, null, 2);
 
 	const blob = new Blob([jsonStr], {
@@ -763,26 +724,30 @@ importBtn.addEventListener('click', () => {
 		};
 
 		reader.readAsText(file);
-	}
-
-	;
+	};
 
 	input.click();
 });
 
-loadLocalList();
-
-supabase.auth.onAuthStateChange((_, session) => {
-	if (session?.user) {
-		supabase.channel(`personal-${session.user.id}`).on('postgres_changes', {
-			event: 'UPDATE',
-			schema: 'public',
-			table: 'personal',
-			filter: `user_id=eq.${session.user.id}`
-		}, () => loadPersonal()).subscribe();
+// Realtime-Aktualisierung für lokale Liste (cross-tab)
+window.addEventListener('storage', (event) => {
+	if (event.key === 'localShoppingList') {
+		loadLocalList();
 	}
 });
 
+// Initialisierung
+loadLocalList();
+
+// Intervall-Check für lokale Liste (Fallback)
+setInterval(() => {
+	const saved = localStorage.getItem('localShoppingList');
+	if (saved && saved !== JSON.stringify(localItems)) {
+		loadLocalList();
+	}
+}, 3000);
+
+// Navigation-Indikator
 document.querySelectorAll('.nav-btn').forEach(button => {
 	button.addEventListener('click', function() {
 		document.querySelectorAll('.nav-btn').forEach(btn => {
