@@ -3,12 +3,13 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Shoply - V4 Beta 1</title>
+	<title>Shoply - V4 Beta 2</title>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://itsmarian-static.is-a.dev/fonts/font-awesome-6.7.2/css/all.min.css">
-	<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+	<link rel="stylesheet" href="https://itsmarian-static.is-a.dev/fonts/font-awesome-6.7.2/css/all.min.css">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon_colored.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/favicon_colored.png">
 	<link rel="stylesheet" href="assets/styles.css">
+	<link rel="stylesheet" href="assets/req.css">
 	<meta name="description" content="Shoply - Eine moderne Einkaufsliste-App">
 	<meta name="keywords" content="einkaufsliste, shopping list, shoply">
 	<meta name="author" content="Shoply">
@@ -16,13 +17,13 @@
 	<meta property="og:title" content="Shoply">
 	<meta property="og:description" content="Eine moderne Einkaufsliste-App">
 	<meta property="og:type" content="website">
-	<meta property="og:url" content="https://shoply.itsmarian.is-a.dev">
-	<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon.png">
+	<meta property="og:url" content="https://philipp-dachtler.github.io/v">
+	<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon_colored.png">
 </head>
 <body>
 	<div id="app">
 		<section id="section-personal">
-			<h2 class="section-header">Meine Liste</h2>
+			<h2 class="section-header">Account Liste</h2>
 			<ul id="personal-list">
 				<div class="empty-state">
 					<p>Noch keine Artikel hinzugefügt</p>
@@ -37,7 +38,7 @@
 				<a>Privacy Policy</a>
 				<a>•</a>
 				<a>Terms of Service</a>
-				<p>Shoply V4 Beta 1 - TEST PHASE; CONTAINS TEMPORARY ELEMENTS, SCRIPTS, STYLES AND OTHER CONTENT THAT MAY CHANGE AT ANY TIME!!</p>
+				<p>Shoply V4 Beta 2 - TEST PHASE; CONTAINS TEMPORARY ELEMENTS, SCRIPTS, STYLES AND OTHER CONTENT THAT MAY CHANGE AT ANY TIME!!</p>
 				<p>&copy; 2025 Shoply Ltd. | All rights reserved!</p>
 			</footer>
 		</section>
@@ -52,23 +53,24 @@
 				<input id="local-input" placeholder="Neues Produkt..." />
 				<button id="local-add">Zu Liste hinzufügen</button>
 			</div>
-            <div class="hr" style="background-color: #ccc; height: 1px; width: 100%;"></div>
+			<div class="hr" style="background-color: #ccc; height: 1px; width: 100%;"></div>
 			<div class="actions-row">
-                <h1>Aktionen</h1>
-				<button id="export-btn"></button>
-                    <i class="fas fa-download"></i>
-                    Exportieren</button>
+				<h1>Aktionen</h1>
+				<button id="export-btn">
+					<i class="fas fa-download"></i>
+					Exportieren
+				</button>
 				<button id="import-btn">
-                    <i class="fas fa-upload"></i>
-                    Importieren
-                </button>
+					<i class="fas fa-upload"></i>
+					Importieren
+				</button>
 			</div>
 			<footer>
 				<p>THIS SITE IS POWERED BY ITSMARIAN VIA ITSMARIAN.IS-A.DEV</p>
 				<a>Privacy Policy</a>
 				<a>•</a>
 				<a>Terms of Service</a>
-				<p>Shoply V4 Beta 1 - TEST PHASE; CONTAINS TEMPORARY ELEMENTS, SCRIPTS, STYLES AND OTHER CONTENT THAT MAY CHANGE AT ANY TIME!!</p>
+				<p>Shoply V4 Beta 2 - TEST PHASE; CONTAINS TEMPORARY ELEMENTS, SCRIPTS, STYLES AND OTHER CONTENT THAT MAY CHANGE AT ANY TIME!!</p>
 				<p>&copy; 2025 Shoply Ltd. | All rights reserved!</p>
 			</footer>
 		</section>
@@ -80,35 +82,34 @@
 					<small id="email"></small>
 				</div>
 			</div>
-			<button id="login-btn">Mit Discord anmelden</button>
+			<button id="login-btn">
+				<i class="fab fa-discord"></i>
+				Discord
+			</button>
 			<button id="logout-btn" class="hidden">Abmelden</button>
-			<footer>
+			<footer style="margin-top: auto;">
 				<p>THIS SITE IS POWERED BY ITSMARIAN VIA ITSMARIAN.IS-A.DEV</p>
 				<a>Privacy Policy</a>
 				<a>•</a>
 				<a>Terms of Service</a>
-				<p>Shoply V4 Beta 1 - TEST PHASE; CONTAINS TEMPORARY ELEMENTS, SCRIPTS, STYLES AND OTHER CONTENT THAT MAY CHANGE AT ANY TIME!!</p>
+				<p>Shoply V4 Beta 2 - TEST PHASE; CONTAINS TEMPORARY ELEMENTS, SCRIPTS, STYLES AND OTHER CONTENT THAT MAY CHANGE AT ANY TIME!!</p>
 				<p>&copy; 2025 Shoply Ltd. | All rights reserved!</p>
 			</footer>
 		</section>
 	</div>
-    <nav class="modern-nav">
-        <div class="active-indicator" style="left: 12.5%; width: 25%;"></div>
-        <button data-sec="personal" class="nav-btn active">
-            <i class="fas fa-globe"></i>
-            <span class="nav-label">Cloud</span>
-        </button>
-        <button data-sec="local" class="nav-btn">
-            <i class="fas fa-computer"></i>
-            <span class="nav-label">Lokal</span>
-        </button>
-        <button data-sec="profile" class="nav-btn">
-            <i class="fas fa-user-cog"></i>
-            <span class="nav-label">Profil</span>
-        </button>
-    </nav>
+	<nav class="modern-nav">
+		<div class="active-indicator" style="left: 8.33333%; width: 16.6667%;"></div>
+		<button data-sec="personal" class="nav-btn active">
+			<i class="fas fa-globe"></i>
+		</button>
+		<button data-sec="local" class="nav-btn">
+			<i class="fas fa-computer"></i>
+		</button>
+		<button data-sec="profile" class="nav-btn">
+			<i class="fas fa-user-cog"></i>
+		</button>
+	</nav>
 	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 	<script src="assets/script.js"></script>
 </body>
-
 </html>
