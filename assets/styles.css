@@ -60,7 +60,6 @@ section {
 	transition: var(--transition);
 	display: none;
 	overflow-y: auto;
-	margin-bottom: 90px;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 }
@@ -122,6 +121,7 @@ button {
 	transition: var(--transition);
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: 8px;
 	white-space: nowrap;
 }
@@ -227,7 +227,6 @@ li div {
 }
 
 footer {
-	margin-top: 30px;
 	padding-top: 20px;
 	border-top: 1px solid var(--border-glass);
 	font-size: 0.8rem;
@@ -242,6 +241,19 @@ footer p {
 footer a {
 	cursor: pointer;
 	text-decoration: none;
+}
+
+.linkout {
+	color: var(--text-secondary) !important;
+	transition: color 0.3s;
+}
+
+.nodecoration {
+	text-decoration: none;
+}
+
+.nodecoration:hover {
+	text-decoration: underline;
 }
 
 footer a:hover {
@@ -359,13 +371,20 @@ footer a:hover {
 
 #logout-btn, #login-btn {
 	align-items: center;
+	display: flex;
+	flex-direction: column;
 	font-size: 18px;
 	justify-content: center;
 	width: 100%;
 }
 
+button:disabled,
+button[disabled] {
+	cursor: not-allowed;
+}
+
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 .actions-row {
@@ -393,7 +412,7 @@ footer a:hover {
 
 	section {
 		height: auto;
-		min-height: calc(100vh - 180px);
+		min-height: calc(100vh - 115px);
 	}
 
 	.modern-nav {

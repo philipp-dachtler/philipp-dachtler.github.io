@@ -40,8 +40,43 @@ let currentUser = null;
 let personalChannel = null;
 let localItems = {};
 
+document.querySelectorAll('.ripple-btn').forEach(el => {
+	el.addEventListener('click', function(e) {
+		const oldRipple = el.querySelector('.ripple');
+		if (oldRipple) oldRipple.remove();
+
+		const rect = el.getBoundingClientRect();
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+
+		const circle = document.createElement('span');
+		const diameter = Math.max(el.clientWidth, el.clientHeight);
+		const radius = diameter / 2;
+		circle.style.width = circle.style.height = diameter + 'px';
+		circle.style.left = (x - radius) + 'px';
+		circle.style.top = (y - radius) + 'px';
+		circle.classList.add('ripple');
+
+		el.appendChild(circle);
+		circle.addEventListener('animationend', () => circle.remove());
+	});
+});
+
+function updatePersonalButtonState() {
+	const personalBtn = document.querySelector('[data-sec="personal"]');
+	if (currentUser) {
+		personalBtn.disabled = false;
+		personalBtn.classList.remove('disabled');
+	} else {
+		personalBtn.disabled = true;
+		personalBtn.classList.add('disabled');
+	}
+}
+
 navButtons.forEach(btn => {
 	btn.addEventListener('click', () => {
+		if (btn.disabled || btn.classList.contains('disabled')) return;
+
 		navButtons.forEach(b => b.classList.remove('active'));
 		btn.classList.add('active');
 
@@ -50,31 +85,43 @@ navButtons.forEach(btn => {
 	});
 });
 
-loginBtn.addEventListener('click', () => {
-	const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-	const redirectTo = isLocalhost ? window.location.origin : 'https://philipp-dachtler.github.io';
+loginBtn.addEventListener('click', async () => {
+	try {
+		const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+		const redirectTo = isLocalhost ? window.location.origin : 'https://philipp-dachtler.github.io';
 
-	supabase.auth.signInWithOAuth({
-		provider: 'discord',
-		options: {
-			redirectTo
-		}
-	});
+		const {
+			error
+		} = await supabase.auth.signInWithOAuth({
+			provider: 'discord',
+			options: {
+				redirectTo
+			}
+		});
+
+		if (error) throw error;
+	} catch (error) {
+		console.error('Login error:', error);
+		alert(`Login failed: ${error.message}`);
+	}
 });
 
-logoutBtn.addEventListener('click', () => supabase.auth.signOut());
+logoutBtn.addEventListener('click', async () => {
+	await supabase.auth.signOut();
+	window.location.reload();
+});
 
 supabase.auth.onAuthStateChange((event, session) => {
-	if (session?.user) {
+	console.log('Auth event:', event, session);
+
+	if (event === 'SIGNED_IN' && session?.user) {
 		currentUser = session.user;
 		showProfile(session.user);
 		loadPersonal();
+		updatePersonalButtonState();
 		document.querySelector('[data-sec="personal"]').click();
 
-		// Realtime-Abonnement für persönliche Liste
-		if (personalChannel) {
-			supabase.removeChannel(personalChannel);
-		}
+		if (personalChannel) supabase.removeChannel(personalChannel);
 
 		personalChannel = supabase.channel(`personal-${session.user.id}`)
 			.on('postgres_changes', {
@@ -84,17 +131,36 @@ supabase.auth.onAuthStateChange((event, session) => {
 				filter: `user_id=eq.${session.user.id}`
 			}, () => loadPersonal())
 			.subscribe();
-
-	} else {
+	} else if (event === 'SIGNED_OUT') {
 		currentUser = null;
 		hideProfile();
-		sections.profile.classList.add('active');
-		navButtons[2].classList.add('active');
+		updatePersonalButtonState();
 
-		// Channel beenden bei Abmeldung
+		Object.values(sections).forEach(s => s.classList.remove('active'));
+		sections.profile.classList.add('active');
+		updateIndicator();
+
+		navButtons.forEach(b => b.classList.remove('active'));
+		document.querySelector('[data-sec="profile"]').classList.add('active');
+
 		if (personalChannel) {
 			supabase.removeChannel(personalChannel);
 			personalChannel = null;
+		}
+	} else if (event === 'INITIAL_SESSION') {
+		if (session?.user) {
+			currentUser = session.user;
+			showProfile(session.user);
+			loadPersonal();
+			updatePersonalButtonState();
+			document.querySelector('[data-sec="personal"]').click();
+		} else {
+			Object.values(sections).forEach(s => s.classList.remove('active'));
+			sections.profile.classList.add('active');
+			updatePersonalButtonState();
+
+			navButtons.forEach(b => b.classList.remove('active'));
+			document.querySelector('[data-sec="profile"]').classList.add('active');
 		}
 	}
 });
@@ -110,9 +176,9 @@ supabase.auth.onAuthStateChange((event, session) => {
 		currentUser = session.user;
 		showProfile(session.user);
 		loadPersonal();
+		updatePersonalButtonState();
 		document.querySelector('[data-sec="personal"]').click();
 
-		// Realtime-Abonnement initialisieren
 		personalChannel = supabase.channel(`personal-${session.user.id}`)
 			.on('postgres_changes', {
 				event: 'UPDATE',
@@ -123,8 +189,11 @@ supabase.auth.onAuthStateChange((event, session) => {
 			.subscribe();
 
 	} else {
+		Object.values(sections).forEach(s => s.classList.remove('active'));
 		sections.profile.classList.add('active');
-		navButtons[2].classList.add('active');
+
+		navButtons.forEach(b => b.classList.remove('active'));
+		document.querySelector('[data-sec="profile"]').classList.add('active');
 	}
 })();
 
@@ -179,7 +248,7 @@ async function loadPersonal() {
 
 		renderPersonalList(items);
 	} catch (error) {
-		console.error('Fehler beim Laden der persönlichen Liste:', error + error.message);
+		console.error('Error loading personal list:', error + error.message);
 	}
 }
 
@@ -187,7 +256,7 @@ function renderPersonalList(items) {
 	pList.innerHTML = '';
 
 	if (Object.keys(items).length === 0) {
-		pList.innerHTML = ` <div class="empty-state"><p>Noch keine Artikel hinzugefügt</p></div>`;
+		pList.innerHTML = ` <div class="empty-state"><p>No items added yet, add a category to start or add items to list.</p></div>`;
 		return;
 	}
 
@@ -224,7 +293,7 @@ function renderPersonalList(items) {
 		ul.className = 'category-items';
 
 		if (entries.length === 0) {
-			ul.innerHTML = `<li class="empty" >Keine Einträge</li>`;
+			ul.innerHTML = `<li class="empty" >No entries</li>`;
 		} else {
 			entries.forEach((it, idx) => {
 				const li = document.createElement('li');
@@ -256,8 +325,8 @@ function renderPersonalList(items) {
 const pInputContainer = document.querySelector('#section-personal .input-row');
 pCategorySelect.id = 'personal-category-select';
 pCategoryAddBtn.id = 'personal-category-add';
-pCategoryAddBtn.textContent = 'Neue Kategorie hinzufügen';
-pCategoryAddBtn.title = 'Kategorie hinzufügen';
+pCategoryAddBtn.textContent = 'Add new category';
+pCategoryAddBtn.title = 'Add category';
 
 pInputContainer.insertBefore(pCategorySelect, pInput);
 pInputContainer.insertBefore(pCategoryAddBtn, pInput);
@@ -270,7 +339,7 @@ pInput.addEventListener('keypress', e => {
 });
 
 async function addPersonalCategory() {
-	const name = prompt('Name der neuen Kategorie:');
+	const name = prompt('Name of the new category:');
 	if (!name) return;
 
 	try {
@@ -283,7 +352,7 @@ async function addPersonalCategory() {
 		let items = data?.items || {};
 
 		if (items[name]) {
-			alert('Kategorie existiert bereits!');
+			alert('Category already exists!');
 			return;
 		}
 
@@ -303,7 +372,7 @@ async function addPersonalCategory() {
 }
 
 window.editPersonalCategory = async (oldName) => {
-	const newName = prompt('Neuer Name der Kategorie:', oldName);
+	const newName = prompt('New category name:', oldName);
 	if (!newName || newName === oldName) return;
 
 	try {
@@ -316,7 +385,7 @@ window.editPersonalCategory = async (oldName) => {
 		let items = data.items;
 
 		if (items[newName]) {
-			alert('Kategorie existiert bereits!');
+			alert('Category already exists!');
 			return;
 		}
 
@@ -337,7 +406,7 @@ window.editPersonalCategory = async (oldName) => {
 };
 
 window.deletePersonalCategory = async (category) => {
-	if (!confirm(`Möchtest du die Kategorie "${category}" und alle ihre Einträge löschen?`)) return;
+	if (!confirm(`Do you want to delete the category "${category}" and all its entries?`)) return;
 
 	try {
 		const {
@@ -370,7 +439,7 @@ window.editPersonalItem = async (category, idx) => {
 	if (error) return;
 
 	const items = data.items;
-	const newName = prompt('Neuer Artikelname:', items[category][idx].name);
+	const newName = prompt('New item name:', items[category][idx].name);
 	if (!newName) return;
 
 	items[category][idx].name = newName;
@@ -475,10 +544,9 @@ function loadLocalList() {
 	const saved = localStorage.getItem('localShoppingList');
 	localItems = saved ? JSON.parse(saved) : {};
 
-	// Migration von alter Struktur
 	if (Array.isArray(localItems)) {
 		localItems = {
-			"Allgemein": localItems
+			"General": localItems
 		};
 		saveLocalList(localItems);
 	}
@@ -490,7 +558,7 @@ function renderLocalList(items) {
 	lList.innerHTML = '';
 
 	if (Object.keys(items).length === 0) {
-		lList.innerHTML = ` <div class="empty-state"><p>Noch keine Artikel hinzugefügt</p></div>`;
+		lList.innerHTML = ` <div class="empty-state"><p>No items added yet, add a category to start or add items to list.</p></div>`;
 		return;
 	}
 
@@ -527,7 +595,7 @@ function renderLocalList(items) {
 		ul.className = 'category-items';
 
 		if (entries.length === 0) {
-			ul.innerHTML = `<li class="empty" >Keine Einträge</li>`;
+			ul.innerHTML = `<li class="empty" >No entries</li>`;
 		} else {
 			entries.forEach((it, idx) => {
 				const li = document.createElement('li');
@@ -565,8 +633,8 @@ function saveLocalList(items) {
 const lInputContainer = document.querySelector('#section-local .input-row');
 lCategorySelect.id = 'local-category-select';
 lCategoryAddBtn.id = 'local-category-add';
-lCategoryAddBtn.textContent = 'Neue Kategorie hinzufügen';
-lCategoryAddBtn.title = 'Kategorie hinzufügen';
+lCategoryAddBtn.textContent = 'Add new category';
+lCategoryAddBtn.title = 'Add category';
 
 lInputContainer.insertBefore(lCategorySelect, lInput);
 lInputContainer.insertBefore(lCategoryAddBtn, lInput);
@@ -579,7 +647,7 @@ lInput.addEventListener('keypress', e => {
 });
 
 function addLocalCategory() {
-	const name = prompt('Name der neuen Kategorie:');
+	const name = prompt('Name of the new category:');
 	if (!name) return;
 
 	const saved = localStorage.getItem('localShoppingList');
@@ -587,7 +655,7 @@ function addLocalCategory() {
 	let items = saved ? JSON.parse(saved) : {};
 
 	if (items[name]) {
-		alert('Kategorie existiert bereits!');
+		alert('Category already exists!');
 		return;
 	}
 
@@ -596,7 +664,7 @@ function addLocalCategory() {
 }
 
 window.editLocalCategory = (oldName) => {
-	const newName = prompt('Neuer Name der Kategorie:', oldName);
+	const newName = prompt('New category name:', oldName);
 	if (!newName || newName === oldName) return;
 
 	const saved = localStorage.getItem('localShoppingList');
@@ -604,7 +672,7 @@ window.editLocalCategory = (oldName) => {
 	let items = saved ? JSON.parse(saved) : {};
 
 	if (items[newName]) {
-		alert('Kategorie existiert bereits!');
+		alert('Category already exists!');
 		return;
 	}
 
@@ -614,7 +682,7 @@ window.editLocalCategory = (oldName) => {
 };
 
 window.deleteLocalCategory = (category) => {
-	if (!confirm(`Möchtest du die Kategorie "${category}" und alle ihre Einträge löschen?`)) return;
+	if (!confirm(`Do you want to delete the category "${category}" and all its entries?`)) return;
 
 	const saved = localStorage.getItem('localShoppingList');
 
@@ -629,7 +697,7 @@ window.editLocalItem = (category, idx) => {
 
 	let items = saved ? JSON.parse(saved) : {};
 
-	const newName = prompt('Neuer Artikelname:', items[category][idx].name);
+	const newName = prompt('New item name:', items[category][idx].name);
 	if (!newName) return;
 
 	items[category][idx].name = newName;
@@ -713,13 +781,13 @@ importBtn.addEventListener('click', () => {
 				const items = JSON.parse(event.target.result);
 
 				if (typeof items !== 'object' || Array.isArray(items)) {
-					throw new Error('Ungültiges Format - Erwartet ein Objekt mit Kategorien');
+					throw new Error('Invalid format - expected an object with categories');
 				}
 
 				saveLocalList(items);
-				alert('Liste erfolgreich importiert!');
+				alert('List imported successfully!');
 			} catch (error) {
-				alert('Fehler beim Import: ' + error.message);
+				alert('Import error: ' + error.message);
 			}
 		};
 
@@ -729,17 +797,12 @@ importBtn.addEventListener('click', () => {
 	input.click();
 });
 
-// Realtime-Aktualisierung für lokale Liste (cross-tab)
 window.addEventListener('storage', (event) => {
 	if (event.key === 'localShoppingList') {
 		loadLocalList();
 	}
 });
 
-// Initialisierung
-loadLocalList();
-
-// Intervall-Check für lokale Liste (Fallback)
 setInterval(() => {
 	const saved = localStorage.getItem('localShoppingList');
 	if (saved && saved !== JSON.stringify(localItems)) {
@@ -747,9 +810,10 @@ setInterval(() => {
 	}
 }, 3000);
 
-// Navigation-Indikator
 document.querySelectorAll('.nav-btn').forEach(button => {
 	button.addEventListener('click', function() {
+		if (this.disabled || this.classList.contains('disabled')) return;
+
 		document.querySelectorAll('.nav-btn').forEach(btn => {
 			btn.classList.remove('active');
 		});
@@ -772,7 +836,7 @@ document.querySelectorAll('.nav-btn').forEach(button => {
 	});
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+function updateIndicator() {
 	const activeButton = document.querySelector('.nav-btn.active');
 	if (activeButton) {
 		activeButton.click();
@@ -790,9 +854,18 @@ document.addEventListener('DOMContentLoaded', () => {
 			indicator.style.width = `${buttonWidth}px`;
 		}
 	}
-});
+};
 
 window.addEventListener('resize', () => {
 	const activeButton = document.querySelector('.nav-btn.active');
 	if (activeButton) activeButton.click();
 });
+
+setTimeout(() => {
+	updateIndicator();
+	setTimeout(() => {
+		updateIndicator();
+	}, 50);
+}, 50);
+
+loadLocalList();

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hydrotracker-v1';
+const CACHE_NAME = 'shoply-v1';
 const ASSETS_TO_CACHE = [
     '/assets/icons/favicon.png',
     '/assets/icons/favicon_colored.png',
