@@ -39,6 +39,7 @@ const lCategoryAddBtn = document.createElement('button');
 let currentUser = null;
 let personalChannel = null;
 let localItems = {};
+let lastPersonalItems = null;
 
 document.querySelectorAll('.ripple-btn').forEach(el => {
 	el.addEventListener('click', function(e) {
@@ -217,41 +218,47 @@ function hideProfile() {
 }
 
 async function loadPersonal() {
-	if (!currentUser) return;
+    if (!currentUser) return;
 
-	try {
-		let items = {};
+    try {
+        let items = {};
 
-		const {
-			data,
-			error
-		} = await supabase
-			.from('personal')
-			.select('items')
-			.eq('user_id', currentUser.id)
-			.single();
+        const {
+            data,
+            error
+        } = await supabase
+            .from('personal')
+            .select('items')
+            .eq('user_id', currentUser.id)
+            .single();
 
-		if (error?.code === 'PGRST116') {
-			const {
-				error: insertError
-			} = await supabase
-				.from('personal')
-				.insert({
-					user_id: currentUser.id,
-					items: {}
-				});
+        if (error?.code === 'PGRST116') {
+            const {
+                error: insertError
+            } = await supabase
+                .from('personal')
+                .insert({
+                    user_id: currentUser.id,
+                    items: {}
+                });
 
-			if (insertError) throw insertError;
-		} else if (error) {
-			throw error;
-		} else {
-			items = data.items || {};
-		}
+            if (insertError) throw insertError;
+            items = {};
+        } else if (error) {
+            throw error;
+        } else {
+            items = data.items || {};
+        }
 
-		renderPersonalList(items);
-	} catch (error) {
-		console.error('Error loading personal list:', error + error.message);
-	}
+        const isNewCategoryCreation = Object.keys(items).length > Object.keys(lastPersonalItems || {}).length;
+        
+        if (isNewCategoryCreation || JSON.stringify(items) !== JSON.stringify(lastPersonalItems)) {
+            lastPersonalItems = items;
+            renderPersonalList(items);
+        }
+    } catch (error) {
+        console.error('Error loading personal list:', error);
+    }
 }
 
 function renderPersonalList(items) {
@@ -869,5 +876,11 @@ setTimeout(() => {
 		updateIndicator();
 	}, 50);
 }, 50);
+
+setInterval(() => {
+    if (currentUser) {
+        loadPersonal();
+    }
+}, 500);
 
 loadLocalList();
