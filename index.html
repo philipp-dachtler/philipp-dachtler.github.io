@@ -460,7 +460,7 @@
             </div>
         </div>
     </div>
-	<footer>
+	<footer id="footer">
 		<p>
 			Site developed and created by
 			<a class="linkout nodecoration" href="https://github.com/itsmarianmc" target="_blank">itsmarian</a>
@@ -652,12 +652,16 @@
             document.getElementById("install-popup").style.visibility = "visible";
             document.getElementById("install-popup").style.opacity = "1";
             console.log('App is running in browser');
+            document.getElementById("app").style.display = "none";
             document.body.style.overflow = 'hidden';
             document.documentElement.style.overflow = 'hidden';
+            document.getElementById('footer').style.display = 'none';
         } else if (isPWA()) {
             document.getElementById("install-popup").style.display = "none";
             document.getElementById("install-popup").style.visibility = "hidden";
             document.getElementById("install-popup").style.opacity = "0";
+            document.getElementById("app").style.display = "grid";
+            document.getElementById('footer').style.display = 'block';
             console.log('App is running as PWA');
         }
 

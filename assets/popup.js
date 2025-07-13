@@ -18,6 +18,9 @@ document.getElementById("keepBrowser").addEventListener("click", function() {
 function checkBrowserChoice() {
     if (localStorage.getItem("browserChoice") === "keep") {
         document.getElementById("install-popup").style.display = "none";
+        document.body.style.overflow = 'unset';
+        document.documentElement.style.overflow = 'unset';
+        document.getElementById("app").style.display = "block";
     }
 }
 
