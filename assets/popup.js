@@ -11,6 +11,8 @@ document.getElementById("returnToLanding").addEventListener("click", function() 
 document.getElementById("keepBrowser").addEventListener("click", function() {
     localStorage.setItem("browserChoice", "keep");
     document.getElementById("install-popup").style.display = "none";
+    document.body.style.overflow = 'unset';
+    document.documentElement.style.overflow = 'unset';
 });
 
 function checkBrowserChoice() {

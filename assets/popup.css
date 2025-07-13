@@ -1,83 +1,91 @@
 :root {
-	--dsgn-p: #de1dbe;
-	--dsgn-b: #5fc7ff;
-	--dsgn-g: #4CAF50;
-	--dsgn-p-light: #ff5aeb;
-	--text-primary: #ffffff;
-	--text-secondary: #a0aec0;
 	--bg-card: rgba(30, 30, 45, 0.6);
 	--bg-secondary: #1a1a2e;
 	--border-glass: rgba(255, 255, 255, 0.1);
 	--border-radius: 12px;
-	--transition: all 0.3s ease;
+	--dsgn-b: #5fc7ff;
+	--dsgn-g: #4CAF50;
+	--dsgn-p: #de1dbe;
+	--dsgn-p-light: #ff5aeb;
 	--shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+	--text-primary: #ffffff;
+	--text-secondary: #a0aec0;
+	--transition: all 0.3s ease;
 }
 
 .container {
-	max-width: 1000px;
 	margin: 0 auto;
+	max-width: 1000px;
+}
+
+#install-popup,
+#landing-container,
+#install-container {
+	-ms-overflow-style: none;
+	overflow-x: hidden;
+	scrollbar-width: none;
 }
 
 /* Hero Section */
 .hero {
-	min-height: 100vh;
+	align-items: center;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
-	text-align: center;
+	min-height: 100vh;
 	padding: 2rem;
 	position: relative;
+	text-align: center;
 }
 
 .hero::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
 	background: radial-gradient(circle at 50% 50%, rgba(95, 199, 255, 0.1) 0%, transparent 70%);
+	bottom: 0;
+	content: '';
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
 
 .hero-content {
+	animation: fadeInUp 1s ease-out;
 	max-width: 800px;
 	z-index: 2;
-	animation: fadeInUp 1s ease-out;
 }
 
 .logo {
-	font-weight: 700;
 	background: linear-gradient(45deg, var(--dsgn-b), var(--dsgn-p));
+	background-clip: text;
+	font-weight: 700;
+	margin-bottom: 1rem;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	background-clip: text;
-	margin-bottom: 1rem;
 }
 
 .hero .logo {
-	font-size: 4rem;
 	animation: pulse 3s infinite;
+	font-size: 4rem;
 }
 
 .hero h1 {
+	color: var(--text-primary);
 	font-size: 3rem;
 	margin-bottom: 1rem;
-	color: var(--text-primary);
 }
 
 .hero p {
-	font-size: 1.2rem;
 	color: var(--text-secondary);
+	font-size: 1.2rem;
 	line-height: 1.6;
 	margin-bottom: 2rem;
 }
 
 .cta-buttons {
 	display: flex;
+	flex-wrap: wrap;
 	gap: 1rem;
 	justify-content: center;
-	flex-wrap: wrap;
 	margin-bottom: 1rem;
 }
 
@@ -90,22 +98,22 @@
 }
 
 .btn {
-	padding: 16px 32px;
-	border-radius: var(--border-radius);
-	border: none;
-	font-weight: 600;
-	cursor: pointer;
-	transition: var(--transition);
-	text-decoration: none;
-	display: inline-flex;
 	align-items: center;
+	border: none;
+	border-radius: var(--border-radius);
+	cursor: pointer;
+	display: inline-flex;
+	font-weight: 600;
 	gap: 8px;
+	padding: 16px 32px;
+	text-decoration: none;
+	transition: var(--transition);
 }
 
 .btn-primary {
 	background: linear-gradient(45deg, var(--dsgn-b), var(--dsgn-p));
-	color: white;
 	box-shadow: 0 4px 20px rgba(95, 199, 255, 0.3);
+	color: white;
 }
 
 .btn:hover {
@@ -118,8 +126,8 @@
 
 .btn-secondary {
 	background: rgba(95, 199, 255, 0.1);
-	color: var(--dsgn-b);
 	border: 1px solid var(--dsgn-b);
+	color: var(--dsgn-b);
 }
 
 .btn-secondary:hover {
@@ -128,62 +136,62 @@
 
 /* Features Section */
 .features {
-	padding: 4rem 2rem;
-	max-width: 1200px;
 	margin: 0 auto;
+	max-width: 1200px;
+	padding: 4rem 2rem;
 }
 
 .section-title {
-	text-align: center;
+	color: var(--dsgn-b);
 	font-size: 2.5rem;
 	margin-bottom: 3rem;
-	color: var(--dsgn-b);
+	text-align: center;
 }
 
 .features-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	gap: 2rem;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	margin-bottom: 4rem;
 }
 
 .feature-card {
-	background: var(--bg-card);
 	backdrop-filter: blur(12px);
+	background: var(--bg-card);
 	border: 1px solid var(--border-glass);
 	border-radius: var(--border-radius);
+	overflow: hidden;
 	padding: 2rem;
+	position: relative;
 	text-align: center;
 	transition: var(--transition);
-	position: relative;
-	overflow: hidden;
 }
 
 .feature-card:hover {
-	transform: translateY(-5px);
 	box-shadow: var(--shadow);
+	transform: translateY(-5px);
 }
 
 .feature-card::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: 3px;
 	background: linear-gradient(90deg, var(--dsgn-b), var(--dsgn-p));
+	content: '';
+	height: 3px;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
 
 .feature-icon {
-	font-size: 3rem;
 	color: var(--dsgn-b);
+	font-size: 3rem;
 	margin-bottom: 1rem;
 }
 
 .feature-card h3 {
+	color: var(--text-primary);
 	font-size: 1.5rem;
 	margin-bottom: 1rem;
-	color: var(--text-primary);
 }
 
 .feature-card p {
@@ -193,13 +201,13 @@
 
 /* Tutorial Section */
 .return-btn {
-	position: absolute;
 	left: 16px;
+	position: absolute;
 }
 
 .header {
-	text-align: center;
 	margin-bottom: 3rem;
+	text-align: center;
 }
 
 .header .logo {
@@ -208,39 +216,39 @@
 }
 
 .header h1 {
+	color: var(--text-primary);
 	font-size: 2.5rem;
 	margin-bottom: 1rem;
-	color: var(--text-primary);
 }
 
 .header p {
-	font-size: 1.2rem;
 	color: var(--text-secondary);
+	font-size: 1.2rem;
 	line-height: 1.6;
 }
 
 .platform-selector {
 	border-top: 1px solid var(--border-glass);
 	display: flex;
-	justify-content: center;
-	padding-top: 20px;
-	gap: 1rem;
-	margin: 2rem 0;
 	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: center;
+	margin: 2rem 0;
+	padding-top: 20px;
 }
 
 .platform-btn {
-	padding: 12px 24px;
+	align-items: center;
 	background: rgba(95, 199, 255, 0.1);
 	border: 1px solid var(--dsgn-b);
 	border-radius: var(--border-radius);
 	color: var(--dsgn-b);
 	cursor: pointer;
-	transition: var(--transition);
 	display: flex;
-	align-items: center;
-	gap: 8px;
 	font-size: 1rem;
+	gap: 8px;
+	padding: 12px 24px;
+	transition: var(--transition);
 }
 
 .platform-btn.active {
@@ -257,66 +265,66 @@
 }
 
 .tutorial-section {
-	background: var(--bg-card);
+	align-items: center;
 	backdrop-filter: blur(12px);
+	background: var(--bg-card);
 	border: 1px solid var(--border-glass);
 	border-radius: var(--border-radius);
-	padding: 2rem;
 	box-shadow: var(--shadow);
 	display: none;
 	flex-direction: column;
-	align-items: center;
 	justify-content: center;
-	max-width: 600px;
-	width: 100%;
 	margin: 2rem auto;
+	max-width: 600px;
+	padding: 2rem;
+	width: 100%;
 }
 
 .tutorial-section.active {
-	display: block;
 	animation: fadeInUp 0.5s ease-out;
+	display: block;
 }
 
 .tutorial-section h2 {
-	font-size: 1.8rem;
-	color: var(--dsgn-b);
-	margin-bottom: 1.5rem;
-	display: flex;
-	justify-content: center;
 	align-items: center;
+	color: var(--dsgn-b);
+	display: flex;
+	font-size: 1.8rem;
 	gap: 12px;
+	justify-content: center;
+	margin-bottom: 1.5rem;
 }
 
 .tutorial-section .step {
+	background: rgba(20, 20, 30, 0.3);
+	border-left: 4px solid var(--dsgn-b);
+	border-radius: var(--border-radius);
 	margin-bottom: 2rem;
 	padding: 1.5rem;
-	background: rgba(20, 20, 30, 0.3);
-	border-radius: var(--border-radius);
-	border-left: 4px solid var(--dsgn-b);
 }
 
 .step-header {
-	display: flex;
 	align-items: center;
+	display: flex;
 	gap: 12px;
 	margin-bottom: 1rem;
 }
 
 .step-number {
-	width: 30px;
-	height: 30px;
+	align-items: center;
 	background: var(--dsgn-b);
 	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-weight: 600;
 	color: white;
+	display: flex;
+	font-weight: 600;
+	height: 30px;
+	justify-content: center;
+	width: 30px;
 }
 
 .step h3 {
-	font-size: 1.3rem;
 	color: var(--text-primary);
+	font-size: 1.3rem;
 }
 
 .step p {
@@ -329,8 +337,8 @@
 	background: rgba(251, 191, 36, 0.1);
 	border: 1px solid rgba(251, 191, 36, 0.3);
 	border-radius: var(--border-radius);
-	padding: 1rem;
 	margin: 1rem 0;
+	padding: 1rem;
 }
 
 .warning-icon {
@@ -343,8 +351,8 @@
 	border: 1px solid rgba(76, 175, 80, 0.3);
 	border-radius: var(--border-radius);
 	color: var(--dsgn-g);
-	padding: 1rem;
 	margin: 1rem 0;
+	padding: 1rem;
 }
 
 .success-icon {
@@ -358,11 +366,11 @@
 }
 
 .features-list li {
-	padding: 0.5rem 0;
-	display: flex;
 	align-items: center;
-	gap: 8px;
 	color: var(--text-secondary);
+	display: flex;
+	gap: 8px;
+	padding: 0.5rem 0;
 }
 
 .features-list li i {
@@ -374,8 +382,8 @@
 	background: rgba(222, 29, 190, 0.1);
 	border: 1px solid rgba(222, 29, 190, 0.3);
 	border-radius: var(--border-radius);
-	padding: 1.5rem;
 	margin: 2rem 0;
+	padding: 1.5rem;
 	text-align: center;
 }
 
@@ -387,32 +395,32 @@
 /* How It Works Section */
 .how-it-works {
 	background: rgba(20, 20, 30, 0.3);
-	padding: 4rem 2rem;
 	margin: 2rem 0;
+	padding: 4rem 2rem;
 }
 
 .steps {
-	max-width: 1000px;
-	margin: 0 auto;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	gap: 2rem;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	margin: 0 auto;
+	max-width: 1000px;
 }
 
 .how-it-works .step {
-	text-align: center;
-	position: relative;
 	background: transparent;
 	border-left: none;
 	padding: 0;
+	position: relative;
+	text-align: center;
 }
 
 .how-it-works .step-number {
-	width: 60px;
-	height: 60px;
-	font-size: 1.5rem;
-	margin: 0 auto 1rem;
 	background: linear-gradient(45deg, var(--dsgn-b), var(--dsgn-p));
+	font-size: 1.5rem;
+	height: 60px;
+	margin: 0 auto 1rem;
+	width: 60px;
 }
 
 .how-it-works .step h3 {
@@ -426,36 +434,36 @@
 
 /* Demo Section */
 .demo-section {
+	margin: 0 auto;
+	max-width: 800px;
 	padding: 4rem 2rem;
 	text-align: center;
-	max-width: 800px;
-	margin: 0 auto;
 }
 
 .demo-preview {
-	background: var(--bg-card);
 	backdrop-filter: blur(12px);
+	background: var(--bg-card);
 	border: 1px solid var(--border-glass);
 	border-radius: var(--border-radius);
-	padding: 2rem;
 	margin: 2rem 0;
+	padding: 2rem;
 	position: relative;
 }
 
 .demo-nav {
 	display: flex;
-	justify-content: center;
 	gap: 1rem;
+	justify-content: center;
 	margin-bottom: 2rem;
 }
 
 .demo-nav-btn {
-	padding: 10px 20px;
 	background: rgba(95, 199, 255, 0.1);
 	border: 1px solid var(--dsgn-b);
 	border-radius: 20px;
 	color: var(--dsgn-b);
 	cursor: pointer;
+	padding: 10px 20px;
 	transition: var(--transition);
 }
 
@@ -504,14 +512,14 @@
 /* Responsive Design */
 @media (max-width: 768px) {
 	.platform-selector {
-		flex-direction: column;
 		align-items: center;
+		flex-direction: column;
 	}
 
 	.platform-btn {
-		width: 100%;
-		max-width: 300px;
 		justify-content: center;
+		max-width: 300px;
+		width: 100%;
 	}
 
 	.header h1,
@@ -528,18 +536,24 @@
 	}
 
 	.cta-buttons {
-		flex-direction: column;
 		align-items: center;
+		flex-direction: column;
 	}
 
 	.btn {
-		width: 100%;
-		max-width: 300px;
 		justify-content: center;
+		max-width: 300px;
+		width: 100%;
 	}
 
 	.features-grid,
 	.steps {
 		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 480px) {
+	.demo-nav {
+		flex-direction: column;
 	}
 }

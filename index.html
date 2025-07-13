@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -652,26 +652,14 @@
             document.getElementById("install-popup").style.visibility = "visible";
             document.getElementById("install-popup").style.opacity = "1";
             console.log('App is running in browser');
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
         } else if (isPWA()) {
             document.getElementById("install-popup").style.display = "none";
             document.getElementById("install-popup").style.visibility = "hidden";
             document.getElementById("install-popup").style.opacity = "0";
             console.log('App is running as PWA');
         }
-
-        window.matchMedia('(display-mode: standalone)').addEventListener('change', (evt) => {
-            if (evt.matches) {
-                document.getElementById("install-popup").style.display = "none";
-                document.getElementById("install-popup").style.visibility = "hidden";
-                document.getElementById("install-popup").style.opacity = "0";
-                console.log('App is running as PWA');
-            } else {
-                document.getElementById("install-popup").style.display = "flex";
-                document.getElementById("install-popup").style.visibility = "visible";
-                document.getElementById("install-popup").style.opacity = "1";
-                console.log('App is running in browser');
-            }
-        });
 
         console.log('Is PWA:', isPWA());
     </script>

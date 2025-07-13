@@ -884,7 +884,7 @@ setInterval(() => {
 	if (currentUser) {
 		loadPersonal();
 	}
-}, 750);
+}, 500);
 
 
 platformButtons.forEach(button => {
