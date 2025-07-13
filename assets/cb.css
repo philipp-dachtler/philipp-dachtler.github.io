@@ -356,7 +356,7 @@ input:disabled + .slider:before {
     
     .cookie-header-bottom {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
     }
     
     .cookie-buttons {
