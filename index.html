@@ -3,12 +3,13 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Shoply - V4 Beta 5</title>
+	<title>Shoply - V4 Beta 6</title>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://itsmarian-static.is-a.dev/fonts/font-awesome-6.7.2/css/all.min.css">
 	<link rel="stylesheet" href="https://itsmarian-static.is-a.dev/global/variables.css">
 	<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon_colored.png">
 	<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/favicon_colored.png">
+	<link rel="stylesheet" href="assets/popup.css">
 	<link rel="stylesheet" href="assets/styles.css">
 	<link rel="stylesheet" href="assets/req.css">
 	<link rel="stylesheet" href="assets/cb.css">
@@ -26,14 +27,31 @@
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCKLQD6DJY"></script>
 	<script>
-	window.dataLayer = window.dataLayer || [];
-    function gtag() {
-        dataLayer.push(arguments);
-    }
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
 
-    gtag('js', new Date());
-    gtag('config', 'G-ZCKLQD6DJY');
+        gtag('js', new Date());
+        gtag('config', 'G-ZCKLQD6DJY');
 	</script>
+    <style>
+        section {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: none;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            min-height: calc(100vh - 65px - 40px - 20px);
+        }
+    </style>
 </head>
 <body>
 	<div id="app">
@@ -92,6 +110,356 @@
 			<button id="logout-btn" class="hidden">Sign out</button>
 		</section>
 	</div>
+    <div id="install-popup">
+        <div class="container" id="landing-container">
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="logo">Shoply</div>
+                    <h1>Your All-in-One Shopping List App</h1>
+                    <p>Organize your shopping lists effortlessly with cloud sync, real-time collaboration, and smart categorization. Never forget an item again!</p>
+                    <div class="cta-buttons">
+                        <a class="btn btn-primary" id="installPageBtn">
+                            <i class="fas fa-download"></i>
+                            How to install
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <i class="fas fa-info-circle"></i>
+                            Learn More
+                        </a>
+                    </div>
+                    <p>
+                        <a id="keepBrowser">or stay in browser</a>
+                    </p>
+                </div>
+            </div>
+            <div class="features" id="features">
+                <h2 class="section-title">Why Choose Shoply?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <h3>Cloud Synchronization</h3>
+                        <p>Access your shopping lists from any device. Your data is automatically synced across all your devices in real-time.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Real-time Collaboration</h3>
+                        <p>Share lists with family and friends. Edit together in real-time and see changes instantly as they happen.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3>Works Offline</h3>
+                        <p>Create and manage local lists that work without internet. Perfect for when you're on the go or have limited connectivity.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <h3>Smart Categories</h3>
+                        <p>Organize your items with custom categories. Keep your shopping organized and efficient with smart grouping.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h3>Import & Export</h3>
+                        <p>Easily import existing lists or export your data. Full control over your shopping list data with convenient backup options.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fab fa-discord"></i>
+                        </div>
+                        <h3>Discord Integration</h3>
+                        <p>Sign in with your Discord account for seamless authentication and easy sharing with your Discord communities.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="how-it-works">
+                <h2 class="section-title">How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Create Your Account</h3>
+                        <p>Sign up with Discord or use it locally without an account. Choose what works best for you.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Add Your Items</h3>
+                        <p>Create categories and add items to your shopping lists. Organize everything just the way you like it.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Shop & Check Off</h3>
+                        <p>Take your list shopping and check off items as you go. Your progress is saved automatically.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Share & Collaborate</h3>
+                        <p>Share lists with others and collaborate in real-time. Perfect for families and roommates.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="demo-section">
+                <h2 class="section-title">Experience Shoply</h2>
+                <p>Choose between cloud-synced account lists or local offline lists. Both options give you full control over your shopping experience.</p>
+                <div class="demo-preview">
+                    <div class="demo-nav">
+                        <button class="demo-nav-btn active">
+                            <i class="fas fa-globe"></i>
+                            Account List
+                        </button>
+                        <button class="demo-nav-btn">
+                            <i class="fas fa-laptop"></i>
+                            Local List
+                        </button>
+                        <button class="demo-nav-btn">
+                            <i class="fas fa-user-cog"></i>
+                            Profile
+                        </button>
+                    </div>
+                    <p>✨ Modern glassmorphism design with smooth animations</p>
+                    <p>🔄 Real-time updates and seamless synchronization</p>
+                    <p>📱 Responsive design that works on all devices</p>
+                </div>
+            </div>
+        </div>
+        <div class="container hidden" id="install-container">
+            <div class="return-btn">
+                <button class="btn btn-secondary ripple-btn" id="returnToLanding">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Landing
+                </button>
+            </div>
+            <div class="header">
+                <div class="logo">Shoply</div>
+                <h1>Install the Shoply app</h1>
+                <p>Get the full Shoply experience with native app features, offline functionality, and quick access from your home screen.</p>
+            </div>
+            <div class="tutorial-section" style="display: flex; flex-direction: column;">
+                <h2>
+                    <i class="fas fa-star"></i>
+                    Benefits of PWA Installation
+                </h2>
+                <ul class="features-list">
+                    <li>
+                        <i class="fas fa-check"></i>
+                        Works offline with local storage
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        Faster loading times
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        Native app-like experience
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        Push notifications (if enabled)
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        No app store required
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        Automatic updates
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        Secure HTTPS connection
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        Full-screen experience
+                    </li>
+                </ul>
+            </div>
+            <div class="platform-selector">
+                <button class="platform-btn active" data-platform="chrome">
+                    <i class="fab fa-chrome"></i>
+                    Chrome / Edge
+                </button>
+                <button class="platform-btn" data-platform="firefox">
+                    <i class="fab fa-firefox"></i>
+                    Firefox
+                </button>
+                <button class="platform-btn" data-platform="safari">
+                    <i class="fab fa-safari"></i>
+                    Safari (iOS)
+                </button>
+                <button class="platform-btn" data-platform="android">
+                    <i class="fab fa-android"></i>
+                    Android Chrome
+                </button>
+            </div>
+            <div class="tutorial-section active" id="chrome-tutorial">
+                <h2>
+                    <i class="fab fa-chrome"></i>
+                    Chrome & Edge Installation
+                </h2>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <h3>Open Shoply in Chrome/Edge</h3>
+                    </div>
+                    <p>Navigate to the Shoply web app in your Chrome or Edge browser. Make sure you're on the main app page.</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <h3>Look for the Install Icon</h3>
+                    </div>
+                    <p>In the address bar, you'll see a small install icon (usually a computer with a down arrow). Click on it.</p>
+                    <div class="warning">
+                        <i class="fas fa-exclamation-triangle warning-icon"></i>
+                        If you don't see the install icon, try refreshing the page or check if your browser supports PWAs.
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <h3>Click "Install"</h3>
+                    </div>
+                    <p>A popup will appear asking if you want to install Shoply. Click "Install" to proceed.</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <h3>Launch the App</h3>
+                    </div>
+                    <p>After installation, Shoply will open in its own window. You can now access it from your desktop or start menu.</p>
+                    <div class="success">
+                        <i class="fas fa-check-circle success-icon"></i>
+                        Congratulations! Shoply is now installed as a PWA on your device.
+                    </div>
+                </div>
+            </div>
+            <div class="tutorial-section" id="firefox-tutorial">
+                <h2>
+                    <i class="fab fa-firefox"></i>
+                    Firefox Installation
+                </h2>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <h3>Open Shoply in Firefox</h3>
+                    </div>
+                    <p>Navigate to the Shoply web app in Firefox. Make sure you're on the main app page.</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <h3>Access the Menu</h3>
+                    </div>
+                    <p>Click the three-line menu button (☰) in the top right corner of Firefox.</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <h3>Find "Install Site as App"</h3>
+                    </div>
+                    <p>In the menu, look for "Install Site as App" or "Add to Home Screen" option and click it.</p>
+                    <div class="warning">
+                        <i class="fas fa-exclamation-triangle warning-icon"></i>
+                        This feature may not be available in all Firefox versions. Update to the latest version if needed.
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <h3>Complete Installation</h3>
+                    </div>
+                    <p>Follow the prompts to complete the installation. Shoply will then be available as a standalone app.</p>
+                </div>
+            </div>
+            <div class="tutorial-section" id="safari-tutorial">
+                <h2>
+                    <i class="fab fa-safari"></i>
+                    Safari (iOS) Installation
+                </h2>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <h3>Open Shoply in Safari</h3>
+                    </div>
+                    <p>Open Safari on your iPhone or iPad and navigate to the Shoply web app.</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <h3>Tap the Share Button</h3>
+                    </div>
+                    <p>Tap the share button (square with an arrow pointing up) at the bottom of the screen.</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <h3>Select "Add to Home Screen"</h3>
+                    </div>
+                    <p>Scroll down in the share menu and tap "Add to Home Screen".</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <h3>Customize and Add</h3>
+                    </div>
+                    <p>You can edit the app name if desired, then tap "Add" in the top right corner.</p>
+                    <div class="success">
+                        <i class="fas fa-check-circle success-icon"></i>
+                        Shoply icon will now appear on your home screen like a native app!
+                    </div>
+                </div>
+            </div>
+            <div class="tutorial-section" id="android-tutorial">
+                <h2>
+                    <i class="fab fa-android"></i>
+                    Android Chrome Installation
+                </h2>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <h3>Open Shoply in Chrome</h3>
+                    </div>
+                    <p>Open Chrome on your Android device and navigate to the Shoply web app.</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <h3>Look for the Install Banner</h3>
+                    </div>
+                    <p>Chrome will automatically show an "Add to Home Screen" banner at the bottom. Tap it.</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <h3>Alternative: Menu Method</h3>
+                    </div>
+                    <p>If no banner appears, tap the three-dot menu (⋮) in the top right, then select "Add to Home Screen".</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <h3>Confirm Installation</h3>
+                    </div>
+                    <p>Tap "Add" to confirm. Shoply will be installed and added to your home screen.</p>
+                    <div class="success">
+                        <i class="fas fa-check-circle success-icon"></i>
+                        You can now launch Shoply like any other app from your home screen!
+                    </div>
+                </div>
+            </div>
+            <div class="quick-install">
+                <h3>Quick Install Available</h3>
+                <p>Most modern browsers will automatically prompt you to install Shoply when you visit the app. Look for install notifications!</p>
+            </div>
+        </div>
+    </div>
 	<footer>
 		<p>
 			Site developed and created by
@@ -105,8 +473,10 @@
 		<br>
 		<p>
 			<a id="settingsPannelOpener">Change Cookie Preferences</a>
+            <a>•</a>
+            <a id="pushRequest">Enable Notifications</a>
 		</p>
-		<p>Shoply V4 Beta 5 - TEST PHASE; CONTAINS TEMPORARY ELEMENTS, SCRIPTS, STYLES AND OTHER CONTENT THAT MAY CHANGE AT ANY TIME!!</p>
+		<p>Shoply V4 Beta 6 - TEST PHASE; CONTAINS TEMPORARY ELEMENTS, SCRIPTS, STYLES AND OTHER CONTENT THAT MAY CHANGE AT ANY TIME!!</p>
 		<p>&copy; 2025 Shoply Ltd. | All rights reserved!</p>
 		<div style="height: 100px; width: 100%;"></div>
 	</footer>
@@ -270,7 +640,40 @@
     </div>
 	<div class="overlay" id="overlay"></div>
 	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-	<script src="assets/script.js"></script>
 	<script src="assets/cb.js"></script>
+    <script src="assets/popup.js"></script>
+    <script src="assets/push.js"></script>
+	<script src="assets/script.js"></script>
+    <script>
+        const isPWA = () => { return window.matchMedia('(display-mode: standalone)').matches ||  window.navigator.standalone || document.referrer.includes('android-app://');};
+
+        if (!isPWA()) {
+            document.getElementById("install-popup").style.display = "flex";
+            document.getElementById("install-popup").style.visibility = "visible";
+            document.getElementById("install-popup").style.opacity = "1";
+            console.log('App is running in browser');
+        } else if (isPWA()) {
+            document.getElementById("install-popup").style.display = "none";
+            document.getElementById("install-popup").style.visibility = "hidden";
+            document.getElementById("install-popup").style.opacity = "0";
+            console.log('App is running as PWA');
+        }
+
+        window.matchMedia('(display-mode: standalone)').addEventListener('change', (evt) => {
+            if (evt.matches) {
+                document.getElementById("install-popup").style.display = "none";
+                document.getElementById("install-popup").style.visibility = "hidden";
+                document.getElementById("install-popup").style.opacity = "0";
+                console.log('App is running as PWA');
+            } else {
+                document.getElementById("install-popup").style.display = "flex";
+                document.getElementById("install-popup").style.visibility = "visible";
+                document.getElementById("install-popup").style.opacity = "1";
+                console.log('App is running in browser');
+            }
+        });
+
+        console.log('Is PWA:', isPWA());
+    </script>
 </body>
 </html>

@@ -1,0 +1,5 @@
+[
+  { "title": "Hello!",   "body": "Welcome to our site." },
+  { "title": "Reminder", "body": "Check out our latest features!" },
+  { "title": "Sale",     "body": "Don't miss our weekend sale!" }
+]

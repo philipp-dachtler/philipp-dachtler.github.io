@@ -36,6 +36,9 @@ const importBtn = document.getElementById('import-btn');
 const lCategorySelect = document.createElement('select');
 const lCategoryAddBtn = document.createElement('button');
 
+const platformButtons = document.querySelectorAll('.platform-btn');
+const tutorialSections = document.querySelectorAll('.tutorial-section');
+
 let currentUser = null;
 let personalChannel = null;
 let localItems = {};
@@ -68,11 +71,11 @@ function updatePersonalButtonState() {
 	if (currentUser) {
 		personalBtn.disabled = false;
 		personalBtn.classList.remove('disabled');
-        personalBtn.title = 'Peronal List';
+		personalBtn.title = 'Peronal List';
 	} else {
 		personalBtn.disabled = true;
 		personalBtn.classList.add('disabled');
-        personalBtn.title = 'Log in to use the personal list';
+		personalBtn.title = 'Log in to use the personal list';
 	}
 }
 
@@ -218,47 +221,47 @@ function hideProfile() {
 }
 
 async function loadPersonal() {
-    if (!currentUser) return;
+	if (!currentUser) return;
 
-    try {
-        let items = {};
+	try {
+		let items = {};
 
-        const {
-            data,
-            error
-        } = await supabase
-            .from('personal')
-            .select('items')
-            .eq('user_id', currentUser.id)
-            .single();
+		const {
+			data,
+			error
+		} = await supabase
+			.from('personal')
+			.select('items')
+			.eq('user_id', currentUser.id)
+			.single();
 
-        if (error?.code === 'PGRST116') {
-            const {
-                error: insertError
-            } = await supabase
-                .from('personal')
-                .insert({
-                    user_id: currentUser.id,
-                    items: {}
-                });
+		if (error?.code === 'PGRST116') {
+			const {
+				error: insertError
+			} = await supabase
+				.from('personal')
+				.insert({
+					user_id: currentUser.id,
+					items: {}
+				});
 
-            if (insertError) throw insertError;
-            items = {};
-        } else if (error) {
-            throw error;
-        } else {
-            items = data.items || {};
-        }
+			if (insertError) throw insertError;
+			items = {};
+		} else if (error) {
+			throw error;
+		} else {
+			items = data.items || {};
+		}
 
-        const isNewCategoryCreation = Object.keys(items).length > Object.keys(lastPersonalItems || {}).length;
-        
-        if (isNewCategoryCreation || JSON.stringify(items) !== JSON.stringify(lastPersonalItems)) {
-            lastPersonalItems = items;
-            renderPersonalList(items);
-        }
-    } catch (error) {
-        console.error('Error loading personal list:', error);
-    }
+		const isNewCategoryCreation = Object.keys(items).length > Object.keys(lastPersonalItems || {}).length;
+
+		if (isNewCategoryCreation || JSON.stringify(items) !== JSON.stringify(lastPersonalItems)) {
+			lastPersonalItems = items;
+			renderPersonalList(items);
+		}
+	} catch (error) {
+		console.error('Error loading personal list:', error);
+	}
 }
 
 function renderPersonalList(items) {
@@ -878,9 +881,60 @@ setTimeout(() => {
 }, 50);
 
 setInterval(() => {
-    if (currentUser) {
-        loadPersonal();
-    }
-}, 500);
+	if (currentUser) {
+		loadPersonal();
+	}
+}, 750);
 
+
+platformButtons.forEach(button => {
+	button.addEventListener('click', () => {
+		platformButtons.forEach(btn => btn.classList.remove('active'));
+
+		button.classList.add('active');
+
+		tutorialSections.forEach(section => {
+			section.classList.remove('active');
+		});
+
+		const platform = button.dataset.platform;
+		const targetSection = document.getElementById(`${platform}-tutorial`);
+		if (targetSection) {
+			targetSection.classList.add('active');
+		}
+	});
+});
+
+function detectBrowser() {
+	const userAgent = navigator.userAgent;
+	const isChrome = /Chrome/i.test(userAgent) && !/Edge/i.test(userAgent);
+	const isEdge = /Edge/i.test(userAgent);
+	const isFirefox = /Firefox/i.test(userAgent);
+	const isSafari = /Safari/i.test(userAgent) && !/Chrome/i.test(userAgent);
+	const isAndroid = /Android/i.test(userAgent);
+	const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+
+	if (isAndroid && isChrome) {
+		document.querySelector('[data-platform="android"]').click();
+	} else if (isIOS && isSafari) {
+		document.querySelector('[data-platform="safari"]').click();
+	} else if (isFirefox) {
+		document.querySelector('[data-platform="firefox"]').click();
+	} else if (isChrome || isEdge) {
+		document.querySelector('[data-platform="chrome"]').click();
+	}
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+	anchor.addEventListener('click', function(e) {
+		e.preventDefault();
+		document.querySelector(this.getAttribute('href')).scrollIntoView({
+			behavior: 'smooth'
+		});
+	});
+});
+
+detectBrowser();
 loadLocalList();
+
+console.log('Running Shoply V4 Beta 6')

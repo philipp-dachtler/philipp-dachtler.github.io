@@ -4,6 +4,10 @@ const ASSETS_TO_CACHE = [
     '/assets/icons/favicon_colored.png',
     '/assets/cb.css',
     '/assets/cb.js',
+    '/assets/messages.json',
+    '/assets/popup.css',
+    '/assets/popup.js',
+    '/assets/push.js',
     '/assets/req.css',
     '/assets/script.js',
     '/assets/styles.css',
@@ -42,4 +46,16 @@ self.addEventListener('fetch', event => {
             response || fetch(event.request)
         )
     );
+});
+
+self.addEventListener('push', event => {
+  const data = event.data.json();
+
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: '/assets/icons/favicon_colored.png',
+      badge: '/assets/icons/favicon.png',
+    })
+  );
 });
