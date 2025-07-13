@@ -137,12 +137,6 @@
     }
 }
 
-.settings-panel.active {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-    visibility: visible;
-}
-
 .settings-header {
     display: flex;
     justify-content: space-between;

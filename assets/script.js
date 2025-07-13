@@ -67,9 +67,11 @@ function updatePersonalButtonState() {
 	if (currentUser) {
 		personalBtn.disabled = false;
 		personalBtn.classList.remove('disabled');
+        personalBtn.title = 'Peronal List';
 	} else {
 		personalBtn.disabled = true;
 		personalBtn.classList.add('disabled');
+        personalBtn.title = 'Log in to use the personal list';
 	}
 }
 

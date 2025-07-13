@@ -44,6 +44,10 @@ h1, h2, h3, h4 {
     margin-inline-start: 0px;
 }
 
+.header-section h2 {
+    text-align: left;
+}
+
 ul {
     display: block;
     list-style-type: disc;

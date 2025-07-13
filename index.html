@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Shoply - V4 Beta 2</title>
+	<title>Shoply - V4 Beta 4</title>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://itsmarian-static.is-a.dev/fonts/font-awesome-6.7.2/css/all.min.css">
 	<link rel="stylesheet" href="https://itsmarian-static.is-a.dev/global/variables.css">
@@ -12,12 +12,11 @@
 	<link rel="stylesheet" href="assets/styles.css">
 	<link rel="stylesheet" href="assets/req.css">
 	<link rel="stylesheet" href="assets/cb.css">
-	<meta name="description" content="Shoply - Eine moderne Einkaufsliste-App">
-	<meta name="keywords" content="einkaufsliste, shopping list, shoply">
+	<meta name="description" content="Shoply V4 - your shopping app: All your shopping lists in one place, created, shared, saved and accessible at any time.">
+	<meta name="keywords" content="shopping app, shopping list, shoply, shopping app, cloud list, online shopping list">
 	<meta name="author" content="Shoply">
-	<meta name="theme-color" content="#4CAF50">
 	<meta property="og:title" content="Shoply">
-	<meta property="og:description" content="Eine moderne Einkaufsliste-App">
+	<meta property="og:description" content="Shoply V4 - your shopping app: All your shopping lists in one place, created, shared, saved and accessible at any time.">
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://philipp-dachtler.github.io/v">
 	<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon_colored.png">
@@ -28,10 +27,12 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCKLQD6DJY"></script>
 	<script>
 	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-	gtag('config', 'G-ZCKLQD6DJY');
+    gtag('js', new Date());
+    gtag('config', 'G-ZCKLQD6DJY');
 	</script>
 </head>
 <body>
@@ -98,26 +99,26 @@
 			via
 			<a class="linkout nodecoration" href="https://itsmarian.is-a.dev/" target="_blank">itsmarian.is-a.dev</a>
 		</p>
-		<a>Privacy Policy</a>
+		<a class="linkout nodecoration" href="/legal/privacy" target="_blank">Privacy Policy</a>
 		<a>•</a>
-		<a>Terms of Service</a>
+		<a class="linkout nodecoration" href="/legal/terms" target="_blank">Terms of Service</a>
 		<br>
 		<p>
 			<a id="settingsPannelOpener">Change Cookie Preferences</a>
 		</p>
-		<p>Shoply V4 Beta 3 - TEST PHASE; CONTAINS TEMPORARY ELEMENTS, SCRIPTS, STYLES AND OTHER CONTENT THAT MAY CHANGE AT ANY TIME!!</p>
+		<p>Shoply V4 Beta 4 - TEST PHASE; CONTAINS TEMPORARY ELEMENTS, SCRIPTS, STYLES AND OTHER CONTENT THAT MAY CHANGE AT ANY TIME!!</p>
 		<p>&copy; 2025 Shoply Ltd. | All rights reserved!</p>
 		<div style="height: 100px; width: 100%;"></div>
 	</footer>
 	<nav class="modern-nav">
 		<div class="active-indicator" style="left: 8.33333%; width: 16.6667%;"></div>
-		<button data-sec="personal" class="nav-btn active">
+		<button data-sec="personal" class="nav-btn active" title="Peronal List">
 			<i class="fas fa-globe"></i>
 		</button>
-		<button data-sec="local" class="nav-btn">
+		<button data-sec="local" class="nav-btn" title="Local List">
 			<i class="fas fa-computer"></i>
 		</button>
-		<button data-sec="profile" class="nav-btn">
+		<button data-sec="profile" class="nav-btn" title="Profile">
 			<i class="fas fa-user-cog"></i>
 		</button>
 	</nav>

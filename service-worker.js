@@ -2,9 +2,11 @@ const CACHE_NAME = 'shoply-v1';
 const ASSETS_TO_CACHE = [
     '/assets/icons/favicon.png',
     '/assets/icons/favicon_colored.png',
+    '/assets/cb.css',
+    '/assets/cb.js',
     '/assets/req.css',
-    '/assets/styles.css',
     '/assets/script.js',
+    '/assets/styles.css',
     'index.html',
     'manifest.json',
     'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
