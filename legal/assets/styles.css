@@ -21,6 +21,7 @@ body {
     font-family: "Noto Sans", sans-serif;
     color: var(--txt-1);
     height: 100vh;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
 }
