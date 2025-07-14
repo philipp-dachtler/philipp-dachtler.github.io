@@ -1,4 +1,10 @@
+
 document.addEventListener('DOMContentLoaded', function() {
+	setTimeout(() => {
+		console.log('%cRunning Shoply V4', 'color: #ccc; font-size: 20px;')
+		console.log('%c\n\n\nDeveloped, created and built with ❤️ by itsmarian \nhttps://itsmarian.is-a.dev/ \nhttps://github.com/itsmarianmc/ \n\n\n', 'color: #7c3aed; font-size: 20px;');
+	}, 60);
+
 	const banner = document.querySelector('.cookie-banner');
 	const settingsPanel = document.getElementById('settings-panel');
 	const overlay = document.getElementById('overlay');

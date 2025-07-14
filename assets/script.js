@@ -936,5 +936,3 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 detectBrowser();
 loadLocalList();
-
-console.log('Running Shoply V4 Beta 6')

@@ -15,6 +15,7 @@ const ASSETS_TO_CACHE = [
     'manifest.json',
     'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
     'https://itsmarian-static.is-a.dev/fonts/font-awesome-6.7.2/css/all.min.css',
+    'https://itsmarian-static.is-a.dev/global/variables.css',
     'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
 ];
 

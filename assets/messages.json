@@ -1,5 +1,9 @@
 [
-  { "title": "Hello!",   "body": "Welcome to our site." },
-  { "title": "Reminder", "body": "Check out our latest features!" },
-  { "title": "Sale",     "body": "Don't miss our weekend sale!" }
+  { "title": "Reminder!", "body": "Have you checked your shopping list for today?" },
+  { "title": "Shopping Time!", "body": "Now would be a good time to go through your list." },
+  { "title": "Don't Forget!", "body": "You wanted to shop today - is everything on the list?" },
+  { "title": "Planning Made Easy", "body": "Plan your shopping in advance with your list." },
+  { "title": "Have you bought everything?", "body": "A quick look at your list won't hurt." },
+  { "title": "Update Your List?", "body": "Reminder: Check if you want to add anything." },
+  { "title": "Last Chance!", "body": "The day is ending - have you done your shopping?" }
 ]

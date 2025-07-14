@@ -38,6 +38,40 @@ h1, h2, h3 {
 	}
 }
 
+footer {
+	border-top: 1px solid var(--border-glass);
+	color: var(--text-secondary);
+	font-size: 1rem;
+	padding-top: 20px;
+	text-align: center;
+}
+
+footer p {
+	margin: 8px 0;
+}
+
+footer a {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.linkout {
+	color: var(--text-secondary) !important;
+	transition: color 0.3s;
+}
+
+.nodecoration {
+	text-decoration: none;
+}
+
+.nodecoration:hover {
+	text-decoration: underline;
+}
+
+footer a:hover {
+	text-decoration: underline;
+}
+
 /* Scrollbar / Source: https://community.hubspot.com/t5/CMS-Development/CSS-for-Scrollbar-in-iOS-devices/m-p/293889 */
 ::-webkit-scrollbar {
 	-webkit-appearance: none;
@@ -45,7 +79,6 @@ h1, h2, h3 {
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: linear-gradient(135deg, #1a1a2e, #16213e);
 	border-radius: 4px;
 	-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
@@ -55,7 +88,6 @@ h1, h2, h3 {
 }
 
 ::-webkit-scrollbar-track {
-	background: linear-gradient(135deg, #1a1a2e, #16213e);
 	border-bottom-right-radius: 5px;
 	border-top-right-radius: 5px;
 }

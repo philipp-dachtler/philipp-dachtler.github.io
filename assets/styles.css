@@ -197,40 +197,6 @@ li div {
 	transform: scale(1.1);
 }
 
-footer {
-	border-top: 1px solid var(--border-glass);
-	color: var(--text-secondary);
-	font-size: 0.8rem;
-	padding-top: 20px;
-	text-align: center;
-}
-
-footer p {
-	margin: 8px 0;
-}
-
-footer a {
-	cursor: pointer;
-	text-decoration: none;
-}
-
-.linkout {
-	color: var(--text-secondary) !important;
-	transition: color 0.3s;
-}
-
-.nodecoration {
-	text-decoration: none;
-}
-
-.nodecoration:hover {
-	text-decoration: underline;
-}
-
-footer a:hover {
-	text-decoration: underline;
-}
-
 .modern-nav {
 	backdrop-filter: blur(20px);
 	background: rgba(30, 30, 46, 0.4);
@@ -470,4 +436,12 @@ button[disabled] {
 		flex-direction: column;
 		gap: 12px;
 	}
+}
+
+::-webkit-scrollbar-thumb {
+	background: linear-gradient(135deg, #1a1a2e, #16213e);
+}
+
+::-webkit-scrollbar-track {
+	background: linear-gradient(135deg, #1a1a2e, #16213e);
 }

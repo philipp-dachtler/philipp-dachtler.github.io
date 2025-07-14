@@ -24,7 +24,20 @@ function checkBrowserChoice() {
         document.documentElement.style.overflow = 'unset';
         document.getElementById("app").style.display = "block";
         document.getElementById("footer").style.display = "block";
+        setTimeout(() => {
+            document.getElementById("install-popup").remove();
+        }, 1000);
     }
 }
 
 window.addEventListener('load', checkBrowserChoice);
+
+document.getElementById("settingsPannelOpenerInstall").addEventListener("click", function() {
+	document.getElementById("settings-panel").style.display = "block";
+	document.getElementById("overlay").style.display = "block";
+});
+
+document.getElementById("settingsPannelOpenerLanding").addEventListener("click", function() {
+	document.getElementById("settings-panel").style.display = "block";
+	document.getElementById("overlay").style.display = "block";
+});
