@@ -123,11 +123,11 @@
                     <h1>Your All-in-One Shopping List App</h1>
                     <p>Organize your shopping lists effortlessly with cloud sync, real-time collaboration, and smart categorization. Never forget an item again!</p>
                     <div class="cta-buttons">
-                        <a class="btn btn-primary" id="installPageBtn">
+                        <a class="btn btn-primary ripple-btn" id="installPageBtn">
                             <i class="fas fa-download"></i>
-                            How to install
+                            Install Shoply App
                         </a>
-                        <a href="#features" class="btn btn-secondary">
+                        <a href="#features" class="btn btn-secondary ripple-btn">
                             <i class="fas fa-info-circle"></i>
                             Learn More
                         </a>
@@ -724,6 +724,13 @@
         }
 
         console.log('APP RUNNING AS PWA? \n⤷', isPWA());
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+            .then(reg => console.log('✅ Service Worker registered.', reg))
+            .catch(err => console.error('❌ Service Worker Error:', err));
+        }
     </script>
 </body>
 </html>
