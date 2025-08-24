@@ -9,10 +9,11 @@
 	<link rel="stylesheet" href="https://itsmarian-static.is-a.dev/global/variables.css">
 	<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon_colored.png">
 	<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/favicon_colored.png">
+	<link rel="stylesheet" href="assets/catcard.css">
+	<link rel="stylesheet" href="assets/cb.css">
 	<link rel="stylesheet" href="assets/popup.css">
 	<link rel="stylesheet" href="assets/styles.css">
 	<link rel="stylesheet" href="assets/req.css">
-	<link rel="stylesheet" href="assets/cb.css">
 	<meta name="author" content="itsmarian">
 	<meta name="title" content="Shoply: Your All-in-One Shopping List App">
 	<meta name="description" content="Your All-in-One Shopping List App: Organize your shopping lists effortlessly with cloud sync, real-time collaboration, and smart categorization. Never forget an item again!">
@@ -26,9 +27,6 @@
     <meta property="og:type" content="website">
 	<meta property="og:url" content="https://philipp-dachtler.github.io/?utm_src=og_link">
 	<link rel="icon" type="image/png" sizes="32x32" href="https://philipp-dachtler.github.io/assets/icons/favicon_colored.png">
-    <!-- App -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#171A2E">
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCKLQD6DJY"></script>
 	<script>
@@ -40,81 +38,98 @@
         gtag('js', new Date());
         gtag('config', 'G-ZCKLQD6DJY');
 	</script>
-    <style>
-        section {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--border-radius);
-            padding: 24px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            display: none;
-            overflow-y: auto;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            min-height: calc(100vh - 65px - 40px - 20px);
-        }
-    </style>
 </head>
 <body>
-	<div id="app">
-		<section id="section-personal">
-			<h2 class="section-header">Account List</h2>
-			<ul id="personal-list">
-				<div class="empty-state">
-					<p>No items added yet, add a category to start or add items to list.</p>
-				</div>
-			</ul>
-			<div class="input-row">
-				<input id="personal-input" placeholder="New Product..." />
-				<button id="personal-add">Add to list</button>
-			</div>
-		</section>
-		<section id="section-local">
-			<h2 class="section-header">Local List</h2>
-			<ul id="local-list">
-				<div class="empty-state">
-					<p>No items added yet, add a category to start or add items to list.</p>
-				</div>
-			</ul>
-			<div class="input-row">
-				<input id="local-input" placeholder="New Product..." />
-				<button id="local-add">Add to list</button>
-			</div>
-			<div class="hr" style="background-color: #ccc; height: 1px; width: 100%;"></div>
-			<div class="actions-row">
-				<h1>Actions</h1>
-				<button id="export-btn">
-					<i class="fas fa-download"></i>
-					Export
-				</button>
-				<button id="import-btn">
-					<i class="fas fa-upload"></i>
-					Import
-				</button>
-			</div>
-		</section>
-		<section id="section-profile">
-			<div id="user-info" class="hidden">
-				<img id="avatar" src="" alt="Avatar" />
-				<div style="display: flex; flex-direction: column;">
-					<span id="username"></span>
-					<small id="email"></small>
-				</div>
-			</div>
-			<div id="login-btn" style="gap: 20px; text-align: center;">
-				<h1>You are not signed in!</h1>
-				<a>Log in with your Discord account to share your list with other people, edit it LIVE with others and keep your lists synced to the cloud!</a>
-				<button style="align-items: center; display: flex; justify-content: center; width: 100%;">
-					<i class="fab fa-discord"></i>
-					Discord
-				</button>
-			</div>
-			<button id="logout-btn" class="hidden">Sign out</button>
-		</section>
-	</div>
+    <header>
+        <div class="header-content">
+            <h1>
+                <i class="fas fa-shopping-cart"></i>
+                Shoply
+            </h1>
+        </div>
+        <div class="user-info">
+            <button class="btn" id="logoutBtn" class="btn-secondary"><i class="fas fa-sign-out-alt"></i> Abmelden</button>
+        </div>
+    </header>
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-logo">
+            <img alt="Shoply Logo" draggable="false" src="assets/icons/favicon_colored.png" width="100%">
+        </div>
+        <div class="loading" id="loadingIndicatorSplash">
+            <div class="spinner"></div>
+        </div>
+    </div>
+    <div class="main-container">
+        <div>
+            <section class="login-screen" id="loginScreen">
+                <h2>Anmeldung zur Einkaufsliste</h2>
+                <div class="form-group">
+                    <label for="familyId">Familien-ID eingeben:</label>
+                    <input type="text" id="familyId" placeholder="64-stellige Familien-ID">
+                </div>
+                <button class="btn" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Anmelden</button>
+                <div class="status-message isHidden hidden" id="loginStatus"></div>
+            </section>
+            <div class="card-header">
+                <h2>Willkommen <span id="familyName" style="font-weight: bold;">Ihre Familie</span></h2>
+            </div>
+            <section class="app-screen" id="appScreen">
+                <div class="add-category-form">
+                    <h3>Neue Kategorie erstellen</h3>
+                    <div class="form-group">
+                        <label for="newCategoryName">Kategorie-Name:</label>
+                        <input type="text" id="newCategoryName" placeholder="Name der neuen Kategorie">
+                    </div>
+                    <button class="btn" id="addCategoryBtn"><i class="fas fa-plus"></i> Kategorie hinzufügen</button>
+                </div>
+                <div class="card-header">
+                    <h3>Neues Item hinzufügen</h3>
+                </div>
+                <div class="add-item-form">
+                    <div class="form-group">
+                        <label for="itemName">Item-Name:</label>
+                        <input type="text" id="itemName" placeholder="Was wird benötigt?">
+                    </div>
+                    <div class="form-group">
+                        <label for="itemCategory">Kategorie:</label>
+                        <select id="itemCategory">
+                            <option value="">Bitte wählen...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="itemQuantity">Menge:</label>
+                        <input type="number" id="itemQuantity" placeholder="1" min="1" value="1">
+                    </div>
+                    <button class="btn" id="addItemBtn"><i class="fas fa-plus"></i> Hinzufügen</button>
+                </div>
+                <div class="status-message isHidden hidden" id="appStatus"></div>
+                <div class="card-header">
+                    <h3>Einkaufsliste</h3>
+                </div>
+                <div class="category-list" id="categoryList"><a>No items yet!</a></div>
+                <div class="last-update" id="lastUpdate">
+                    Letzte Aktualisierung: <span id="updateTime">--:--:--</span>
+                </div>
+            </section>
+        </div>
+        <footer id="footer">
+            <span id="connectionStatus" class="connection-status disconnected" title="Verbindungsstatus"></span>
+            <p>
+                Site developed and created by
+                <a class="linkout nodecoration" href="https://github.com/itsmarianmc" target="_blank">itsmarian</a>
+                via
+                <a class="linkout nodecoration" href="https://itsmarian.is-a.dev/" target="_blank">itsmarian.is-a.dev</a>
+            </p>
+            <a class="linkout nodecoration" href="/legal/privacy" target="_blank">Privacy Policy</a>
+            <a>•</a>
+            <a class="linkout nodecoration" href="/legal/terms" target="_blank">Terms of Service</a>
+            <br>
+            <p>
+                <a id="settingsPannelOpener">Change Cookie Preferences</a>
+            </p>
+            <p>&copy; 2025 Shoply Ltd. | All rights reserved!</p>
+        </footer>
+    </div>
     <div id="install-popup">
         <div class="container" id="landing-container">
             <div class="hero">
@@ -193,22 +208,22 @@
                         <p>Download and install the Shoply App on your device. The installation process is quick and easy.</p>
                     </div>
                     <div class="step">
-                        <div class="step-number">1</div>
+                        <div class="step-number">2</div>
                         <h3>Create Your Account</h3>
                         <p>Sign up with Discord or use it locally without an account. Choose what works best for you.</p>
                     </div>
                     <div class="step">
-                        <div class="step-number">2</div>
+                        <div class="step-number">3</div>
                         <h3>Add Your Items</h3>
                         <p>Create categories and add items to your shopping lists. Organize everything just the way you like it.</p>
                     </div>
                     <div class="step">
-                        <div class="step-number">3</div>
+                        <div class="step-number">4</div>
                         <h3>Shop & Check Off</h3>
                         <p>Take your list shopping and check off items as you go. Your progress is saved automatically.</p>
                     </div>
                     <div class="step">
-                        <div class="step-number">4</div>
+                        <div class="step-number">5</div>
                         <h3>Share & Collaborate</h3>
                         <p>Share lists with others and collaborate in real-time. Perfect for families and roommates.</p>
                     </div>
@@ -237,25 +252,6 @@
                     <p>📱 Responsive design that works on all devices</p>
                 </div>
             </div>
-            <footer style="padding: 10px;">
-                <p>
-                    Site developed and created by
-                    <a class="linkout nodecoration" href="https://github.com/itsmarianmc" target="_blank">itsmarian</a>
-                    via
-                    <a class="linkout nodecoration" href="https://itsmarian.is-a.dev/" target="_blank">itsmarian.is-a.dev</a>
-                </p>
-                <a class="linkout nodecoration" href="/legal/privacy" target="_blank">Privacy Policy</a>
-                <a>•</a>
-                <a class="linkout nodecoration" href="/legal/terms" target="_blank">Terms of Service</a>
-                <br>
-                <p>
-                    <a id="settingsPannelOpenerLanding">Change Cookie Preferences</a>
-                    <a id="pushRequestLandingD">•</a>
-                    <a id="pushRequestLanding">Enable Notifications</a>
-                </p>
-                <p>&copy; 2025 Shoply Ltd. | All rights reserved!</p>
-                <div style="height: 10px; margin: 0 auto; width: 50%;"></div>
-            </footer>
         </div>
         <div class="container hidden" id="install-container">
             <div class="return-btn">
@@ -501,93 +497,9 @@
                 <h3>Quick Install Available</h3>
                 <p>Most modern browsers will automatically prompt you to install Shoply when you visit the app. Look for install notifications!</p>
             </div>
-            <footer style="padding: 10px; width: 100%;">
-                <p>
-                    Site developed and created by
-                    <a class="linkout nodecoration" href="https://github.com/itsmarianmc" target="_blank">itsmarian</a>
-                    via
-                    <a class="linkout nodecoration" href="https://itsmarian.is-a.dev/" target="_blank">itsmarian.is-a.dev</a>
-                </p>
-                <a class="linkout nodecoration" href="/legal/privacy" target="_blank">Privacy Policy</a>
-                <a>•</a>
-                <a class="linkout nodecoration" href="/legal/terms" target="_blank">Terms of Service</a>
-                <br>
-                <p>
-                    <a id="settingsPannelOpenerInstall">Change Cookie Preferences</a>
-                    <a id="pushRequestInstallD">•</a>
-                    <a id="pushRequestInstall">Enable Notifications</a>
-                </p>
-                <p>&copy; 2025 Shoply Ltd. | All rights reserved!</p>
-            </footer>
         </div>
     </div>
-	<footer id="footer">
-		<p>
-			Site developed and created by
-			<a class="linkout nodecoration" href="https://github.com/itsmarianmc" target="_blank">itsmarian</a>
-			via
-			<a class="linkout nodecoration" href="https://itsmarian.is-a.dev/" target="_blank">itsmarian.is-a.dev</a>
-		</p>
-		<a class="linkout nodecoration" href="/legal/privacy" target="_blank">Privacy Policy</a>
-		<a>•</a>
-		<a class="linkout nodecoration" href="/legal/terms" target="_blank">Terms of Service</a>
-		<br>
-		<p>
-			<a id="settingsPannelOpener">Change Cookie Preferences</a>
-            <a id="pushRequestD">•</a>
-            <a id="pushRequest">Enable Notifications</a>
-		</p>
-		<p>&copy; 2025 Shoply Ltd. | All rights reserved!</p>
-		<div style="height: 100px; width: 100%;"></div>
-	</footer>
-	<nav class="modern-nav">
-		<div class="active-indicator" style="left: 8.33333%; width: 16.6667%;"></div>
-		<button data-sec="personal" class="nav-btn active" title="Peronal List">
-			<i class="fas fa-globe"></i>
-		</button>
-		<button data-sec="local" class="nav-btn" title="Local List">
-			<i class="fas fa-computer"></i>
-		</button>
-		<button data-sec="profile" class="nav-btn" title="Profile">
-			<i class="fas fa-user-cog"></i>
-		</button>
-	</nav>
-	<div class="cookie-banner" style="display: block;">
-        <div class="cookie-header flex-column">
-            <div class="cookie-header cookie-header-bottom flex-row">
-                <div class="cookie-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="30" fill="#fff">
-                        <path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-75 29-147t81-128.5q52-56.5 125-91T475-881q21 0 43 2t45 7q-9 45 6 85t45 66.5q30 26.5 71.5 36.5t85.5-5q-26 59 7.5 113t99.5 56q1 11 1.5 20.5t.5 20.5q0 82-31.5 154.5t-85.5 127q-54 54.5-127 86T480-80Zm-60-480q25 0 42.5-17.5T480-620q0-25-17.5-42.5T420-680q-25 0-42.5 17.5T360-620q0 25 17.5 42.5T420-560Zm-80 200q25 0 42.5-17.5T400-420q0-25-17.5-42.5T340-480q-25 0-42.5 17.5T280-420q0 25 17.5 42.5T340-360Zm260 40q17 0 28.5-11.5T640-360q0-17-11.5-28.5T600-400q-17 0-28.5 11.5T560-360q0 17 11.5 28.5T600-320ZM480-160q122 0 216.5-84T800-458q-50-22-78.5-60T683-603q-77-11-132-66t-68-132q-80-2-140.5 29t-101 79.5Q201-644 180.5-587T160-480q0 133 93.5 226.5T480-160Zm0-324Z"></path>
-                    </svg>
-                </div>
-                <div>
-                    <h2 class="cookie-title">This site uses cookies</h2>
-                </div>
-            </div>
-            <div>
-                <p class="cookie-description">
-                    <a>This website uses cookies and similar technologies to ensure its basic functionality, enhance your user experience, analyze how it is used, gather anonymized statistics on website traffic and usage patterns, remember your preferences such as language or region, and provide enhanced features and to offer embedded content like videos, maps, or social media feeds.</a>
-                    <br>
-                    <a>By clicking “Accept,” you agree to the use of all cookies. You can change your settings at any time. By using my services, you agree to the</a>
-                    <a class="linkout nodecoration" href="/legal/cookies">Cookie Policy</a><a>, the</a>
-                    <a class="linkout nodecoration" href="/legal/privacy">Privacy Policy</a>
-                    <a>and the</a>
-                    <a class="linkout nodecoration" href="/legal/terms">Terms of Use</a><a>.</a>
-                </p>
-            </div>
-        </div>
-        <div class="cookie-buttons">
-            <button class="cookie-btn btn-primary" id="accept-all">
-                <i class="fas fa-check-circle"></i>
-                Accept all
-            </button>
-            <button class="cookie-btn btn-secondary ripple-btn" id="change-settings">
-                <i class="fas fa-cog"></i>
-                Change settings
-            </button>
-        </div>
-    </div>
-	<div class="settings-panel" id="settings-panel">
+    <div class="settings-panel" id="settings-panel">
         <div class="settings-header">
             <h2 class="settings-title">Cookie-Settings</h2>
             <button class="close-btn ripple-btn" id="close-settings">
@@ -698,32 +610,59 @@
             </button>
         </div>
     </div>
-	<div class="overlay" id="overlay"></div>
-	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-	<script src="assets/cb.js"></script>
+    <div class="cookie-banner">
+        <div class="cookie-header flex-column">
+            <div class="cookie-header cookie-header-bottom flex-row">
+                <div class="cookie-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="30" fill="#fff">
+                        <path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-75 29-147t81-128.5q52-56.5 125-91T475-881q21 0 43 2t45 7q-9 45 6 85t45 66.5q30 26.5 71.5 36.5t85.5-5q-26 59 7.5 113t99.5 56q1 11 1.5 20.5t.5 20.5q0 82-31.5 154.5t-85.5 127q-54 54.5-127 86T480-80Zm-60-480q25 0 42.5-17.5T480-620q0-25-17.5-42.5T420-680q-25 0-42.5 17.5T360-620q0 25 17.5 42.5T420-560Zm-80 200q25 0 42.5-17.5T400-420q0-25-17.5-42.5T340-480q-25 0-42.5 17.5T280-420q0 25 17.5 42.5T340-360Zm260 40q17 0 28.5-11.5T640-360q0-17-11.5-28.5T600-400q-17 0-28.5 11.5T560-360q0 17 11.5 28.5T600-320ZM480-160q122 0 216.5-84T800-458q-50-22-78.5-60T683-603q-77-11-132-66t-68-132q-80-2-140.5 29t-101 79.5Q201-644 180.5-587T160-480q0 133 93.5 226.5T480-160Zm0-324Z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="cookie-title">This site uses cookies</h2>
+                </div>
+            </div>
+            <div>
+                <p class="cookie-description">
+                    <a>This website uses cookies and similar technologies to ensure its basic functionality, enhance your user experience, analyze how it is used, gather anonymized statistics on website traffic and usage patterns, remember your preferences such as language or region, and provide enhanced features and to offer embedded content like videos, maps, or social media feeds.</a>
+                    <br>
+                    <a>By clicking “Accept,” you agree to the use of all cookies. You can change your settings at any time. By using my services, you agree to the</a>
+                    <a class="linkout nodecoration" href="/legal/cookies">Cookie Policy</a><a>, the</a>
+                    <a class="linkout nodecoration" href="/legal/privacy">Privacy Policy</a>
+                    <a>and the</a>
+                    <a class="linkout nodecoration" href="/legal/terms">Terms of Use</a><a>.</a>
+                </p>
+            </div>
+        </div>
+        <div class="cookie-buttons">
+            <button class="cookie-btn btn-primary" id="accept-all">
+                <i class="fas fa-check-circle"></i>
+                Accept all
+            </button>
+            <button class="cookie-btn btn-secondary ripple-btn" id="change-settings">
+                <i class="fas fa-cog"></i>
+                Change settings
+            </button>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/script.js"></script>
     <script src="assets/popup.js"></script>
-    <script src="assets/push.js"></script>
-	<script src="assets/script.js"></script>
+    <script src="assets/cb.js"></script>
     <script>
         const isPWA = () => { return window.matchMedia('(display-mode: standalone)').matches ||  window.navigator.standalone || document.referrer.includes('android-app://');};
+        console.log('APP RUNNING AS PWA? \n⤷', isPWA());
 
         if (!isPWA()) {
             document.getElementById("install-popup").style.display = "flex";
             document.getElementById("install-popup").style.visibility = "visible";
             document.getElementById("install-popup").style.opacity = "1";
-            document.getElementById("app").style.display = "none";
-            document.body.style.overflow = 'hidden';
-            document.documentElement.style.overflow = 'hidden';
-            document.getElementById('footer').style.display = 'none';
         } else if (isPWA()) {
             document.getElementById("install-popup").style.display = "none";
             document.getElementById("install-popup").style.visibility = "hidden";
             document.getElementById("install-popup").style.opacity = "0";
-            document.getElementById("app").style.display = "grid";
-            document.getElementById('footer').style.display = 'block';
         }
-
-        console.log('APP RUNNING AS PWA? \n⤷', isPWA());
     </script>
     <script>
         if ('serviceWorker' in navigator) {

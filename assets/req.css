@@ -1,6 +1,5 @@
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-primary);
     color: var(--text-primary);
     display: flex;
     flex-direction: column;
@@ -44,10 +43,11 @@ footer {
 	font-size: 1rem;
 	padding: 20px 0px;
 	text-align: center;
+	width: 100%;
 }
 
 footer p {
-	margin: 8px 0;
+	margin: 4px 0;
 }
 
 footer a {
@@ -70,37 +70,4 @@ footer a {
 
 footer a:hover {
 	text-decoration: underline;
-}
-
-/* Scrollbar / Source: https://community.hubspot.com/t5/CMS-Development/CSS-for-Scrollbar-in-iOS-devices/m-p/293889 */
-::-webkit-scrollbar {
-	-webkit-appearance: none;
-	width: 7px;
-}
-
-::-webkit-scrollbar-thumb {
-	border-radius: 4px;
-	-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-}
-
-::-webkit-scrollbar {
-	width: 5px;
-}
-
-::-webkit-scrollbar-track {
-	border-bottom-right-radius: 5px;
-	border-top-right-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-	background: #707070;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background: #646464;
-}
-
-::-webkit-overflow-scrolling:touch {
-	background: #707070;
-	width: 5px;
 }

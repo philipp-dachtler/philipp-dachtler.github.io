@@ -14,8 +14,7 @@
 }
 
 .container {
-	margin: 0 auto;
-	max-width: 1000px;
+	margin: calc(var(--body-padding) * 2) auto;
 }
 
 #install-popup,
@@ -24,6 +23,12 @@
 	-ms-overflow-style: none;
 	overflow-x: hidden;
 	scrollbar-width: none;
+	width: 100%;
+}
+
+#install-popup {
+	background: linear-gradient(135deg, #1a1a2e, #16213e);
+	position: absolute;
 }
 
 #install-container {
@@ -48,6 +53,7 @@
 	padding: 2rem;
 	position: relative;
 	text-align: center;
+	width: 100%;
 }
 
 .hero::before {
@@ -62,8 +68,8 @@
 
 .hero-content {
 	animation: fadeInUp 1s ease-out;
-	max-width: 800px;
 	z-index: 2;
+	width: 100%;
 }
 
 .logo {
@@ -99,6 +105,13 @@
 	gap: 1rem;
 	justify-content: center;
 	margin-bottom: 1rem;
+	width: 100%;
+	max-width: 750px;
+	margin: 0 auto;
+}
+
+.cta-buttons a {
+	width: calc(50% - 0.5rem);
 }
 
 #keepBrowser {

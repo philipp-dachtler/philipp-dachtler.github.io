@@ -2,12 +2,11 @@ const CACHE_NAME = 'shoply-v1';
 const ASSETS_TO_CACHE = [
     '/assets/icons/favicon.png',
     '/assets/icons/favicon_colored.png',
+    '/assets/catcard.css',
     '/assets/cb.css',
     '/assets/cb.js',
-    '/assets/messages.json',
     '/assets/popup.css',
     '/assets/popup.js',
-    '/assets/push.js',
     '/assets/req.css',
     '/assets/script.js',
     '/assets/styles.css',

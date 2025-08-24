@@ -13,17 +13,15 @@ document.getElementById("keepBrowser").addEventListener("click", function() {
     document.getElementById("install-popup").style.display = "none";
     document.body.style.overflow = 'unset';
     document.documentElement.style.overflow = 'unset';
-        document.getElementById("app").style.display = "block";
-        document.getElementById("footer").style.display = "block";
+    document.querySelector(".main-container").style.display = "block";
 });
 
 function checkBrowserChoice() {
     if (localStorage.getItem("browserChoice") === "keep") {
         document.getElementById("install-popup").style.display = "none";
+        document.querySelector(".main-container").style.display = "block";
         document.body.style.overflow = 'unset';
         document.documentElement.style.overflow = 'unset';
-        document.getElementById("app").style.display = "block";
-        document.getElementById("footer").style.display = "block";
         setTimeout(() => {
             document.getElementById("install-popup").remove();
         }, 1000);
@@ -31,13 +29,3 @@ function checkBrowserChoice() {
 }
 
 window.addEventListener('load', checkBrowserChoice);
-
-document.getElementById("settingsPannelOpenerInstall").addEventListener("click", function() {
-	document.getElementById("settings-panel").style.display = "block";
-	document.getElementById("overlay").style.display = "block";
-});
-
-document.getElementById("settingsPannelOpenerLanding").addEventListener("click", function() {
-	document.getElementById("settings-panel").style.display = "block";
-	document.getElementById("overlay").style.display = "block";
-});
