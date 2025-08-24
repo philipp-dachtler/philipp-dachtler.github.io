@@ -588,4 +588,7 @@
 	.demo-nav {
 		flex-direction: column;
 	}
+	.cta-buttons a {
+		width: calc(100% - 0.5rem);
+	}
 }

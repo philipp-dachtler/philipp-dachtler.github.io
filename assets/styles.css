@@ -333,6 +333,12 @@ input::placeholder {
     color: var(--text-secondary);
 }
 
+.info-text {
+    color: #b0b0b0;
+    font-size: 0.9rem;
+    margin-top: 20px;
+}
+
 .btn {
     align-items: center;
     background: rgba(95, 199, 255, 0.3);

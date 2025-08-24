@@ -76,7 +76,7 @@ categoryList.addEventListener('click', (e) => {
         e.stopPropagation();
         const itemElement = deleteBtn.closest('.item');
         const itemId = itemElement.dataset.id;
-        if (confirm('Möchten Sie dieses Item wirklich löschen?')) {
+        if (confirm('Möchtest du dieses Item wirklich löschen?')) {
             deleteItem(itemId);
         }
     } else if (deleteCategoryBtn) {
@@ -85,7 +85,7 @@ categoryList.addEventListener('click', (e) => {
         const categoryCard = deleteCategoryBtn.closest('.category-card');
         const categoryId = categoryCard.dataset.categoryId;
         const categoryName = categoryCard.querySelector('h4').textContent;
-        if (confirm(`Möchten Sie die Kategorie "${categoryName}" wirklich löschen? Alle Items in dieser Kategorie werden ebenfalls gelöscht.`)) {
+        if (confirm(`Möchtest du die Kategorie "${categoryName}" wirklich löschen? Alle Items in dieser Kategorie werden ebenfalls gelöscht.`)) {
             deleteCategory(categoryId);
         }
     }
@@ -384,7 +384,7 @@ async function handleLogin() {
             .single();
 
         if (error || !data) {
-            showLoginStatus('Ungültige Familien-ID. Bitte überprüfen Sie die ID.', 'error');
+            showLoginStatus('Ungültige Familien-ID. Bitte überprüfe die ID und versuche es erneut.', 'error');
             return;
         }
 
@@ -406,7 +406,7 @@ async function handleLogin() {
         document.querySelector(".user-info").style.display = "block";
 
     } catch (error) {
-        showLoginStatus('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.', 'error');
+        showLoginStatus('Ein Fehler ist aufgetreten. Bitte versuche es später erneut.', 'error');
         console.error('Login error:', error);
     }
 }
@@ -542,7 +542,7 @@ async function addCategory() {
     const name = newCategoryNameInput.value.trim();
 
     if (!name) {
-        showStatusMessage('Bitte geben Sie einen Namen für die Kategorie ein.', 'error');
+        showStatusMessage('Bitte gebe einen Namen für die Kategorie ein.', 'error');
         return;
     }
 
@@ -742,12 +742,12 @@ async function addItem() {
     const quantity = parseInt(itemQuantityInput.value) || 1;
 
     if (!name) {
-        showStatusMessage('Bitte geben Sie einen Namen für das Item ein.', 'error');
+        showStatusMessage('Bitte gebe einen Namen für das Item ein.', 'error');
         return;
     }
 
     if (!categoryId) {
-        showStatusMessage('Bitte wählen Sie eine Kategorie aus.', 'error');
+        showStatusMessage('Bitte wähle eine Kategorie aus.', 'error');
         return;
     }
 
