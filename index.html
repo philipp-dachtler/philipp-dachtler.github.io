@@ -659,6 +659,9 @@
             document.getElementById("install-popup").style.visibility = "visible";
             document.getElementById("install-popup").style.opacity = "1";
         } else if (isPWA()) {
+            document.querySelector(".main-container").style.display = "block";
+            localStorage.setItem("browserChoice", "keep");
+            
             document.getElementById("install-popup").style.display = "none";
             document.getElementById("install-popup").style.visibility = "hidden";
             document.getElementById("install-popup").style.opacity = "0";

@@ -142,7 +142,6 @@ header h1 i {
 }
 
 .splash-screen {
-    display: none !important;
     position: fixed;
     top: 0;
     left: 0;
