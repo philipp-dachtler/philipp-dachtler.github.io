@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
 	setTimeout(() => {
 		console.log('%cRunning Shoply V4', 'color: #ccc; font-size: 20px;')

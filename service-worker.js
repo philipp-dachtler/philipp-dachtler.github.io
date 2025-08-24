@@ -1,4 +1,4 @@
-const CACHE_NAME = 'shoply-v1';
+const CACHE_NAME = 'shoply-v5';
 const ASSETS_TO_CACHE = [
     'assets/icons/favicon.png',
     'assets/icons/favicon_colored.png',
@@ -49,13 +49,13 @@ self.addEventListener('fetch', event => {
 });
 
 self.addEventListener('push', event => {
-  const data = event.data.json();
+    const data = event.data.json();
 
-  event.waitUntil(
-    self.registration.showNotification(data.title, {
-      body: data.body,
-      icon: '/assets/icons/favicon_colored.png',
-      badge: '/assets/icons/favicon.png',
-    })
-  );
+    event.waitUntil(
+        self.registration.showNotification(data.title, {
+        body: data.body,
+        icon: '/assets/icons/favicon_colored.png',
+        badge: '/assets/icons/favicon.png',
+        })
+    );
 });

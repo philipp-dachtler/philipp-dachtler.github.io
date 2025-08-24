@@ -1,20 +1,21 @@
 body {
-    font-family: 'Inter', sans-serif;
-    color: var(--text-primary);
-    display: flex;
-    flex-direction: column;
+	font-family: 'Inter', sans-serif;
+	color: var(--text-primary);
+	display: flex;
+	flex-direction: column;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-
-h1, h2, h3 {
-    text-align: center;
+h1,
+h2,
+h3 {
+	text-align: center;
 }
 
 .ripple {
@@ -27,13 +28,13 @@ h1, h2, h3 {
 
 .ripple-btn {
 	position: relative;
-    overflow: hidden;
+	overflow: hidden;
 }
 
 @keyframes ripple-effect {
 	to {
-	  transform: scale(4);
-	  opacity: 0;
+		transform: scale(4);
+		opacity: 0;
 	}
 }
 
