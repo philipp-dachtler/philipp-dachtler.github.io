@@ -42,6 +42,7 @@ footer {
 	border-top: 1px solid var(--border-glass);
 	color: var(--text-secondary);
 	font-size: 1rem;
+	margin-top: 1rem;
 	padding: 20px 0px;
 	text-align: center;
 	width: 100%;
