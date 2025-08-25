@@ -954,15 +954,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		}
 	});
-
-	window.addEventListener('focus', function() {
-		if (lastHiddenTime > 0) {
-			const timeAway = Date.now() - lastHiddenTime;
-			if (timeAway > 1000) {
-				showSplashScreen();
-			}
-		}
-	});
 });
 
 document.addEventListener('resume', function() {

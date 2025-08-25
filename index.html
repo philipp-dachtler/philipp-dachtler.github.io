@@ -63,21 +63,22 @@
 	<div class="main-container">
 		<div>
 			<section class="login-screen" id="loginScreen">
-				<h2>Logge dich ein</h2>
+				<h2>Anmelden</h2>
 				<div class="form-group">
 					<label for="familyId">NUTZER-ID EINGEBEN:</label>
-					<input type="text" id="familyId" placeholder="XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX--XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX">
+					<input type="text" id="familyId" placeholder="XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX">
 				</div>
 				<button class="btn" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Anmelden</button>
-				<div style="text-align: center; width: 100%;">
-					<p class="info-text">
-						<i class="fas fa-info-circle"></i>
-						Um dich anzumelden, benötigst du eine gültige Nutzer-ID. Diese kannst du von einem Administrator dieser Seite erhalten.
-						<br>
-						Shoply V5 ist aktuell in der BETA Phase, daher werden Nutzer-IDs nur an bestimmte Zielgruppen vergeben.
-					</p>
-				</div>
 				<div class="status-message isHidden hidden" id="loginStatus"></div>
+				<div class="or-divider">
+					<span>ODER</span>
+				</div>
+				<button class="btn" id="registerBtn">
+					<a style="color: var(--text-primary); text-decoration: none !important; width: 100%;" href="/register">
+						<i class="fas fa-user-plus"></i>
+						Registrieren
+					</a>
+				</button>
 			</section>
 			<div class="card-header">
 				<h2>Willkommen <span id="familyName" style="font-weight: bold;">Ihre Familie</span></h2>

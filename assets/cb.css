@@ -131,10 +131,10 @@
 	transition: var(--transition);
 	-ms-overflow-style: none;
 	scrollbar-width: none;
-	animation: fadeIn 0.4s ease-out;
+	animation: fadeInCB 0.4s ease-out;
 }
 
-@keyframes fadeIn {
+@keyframes fadeInCB {
 	0% {
 		opacity: 0;
 		transform: translate(-50%, -45%);

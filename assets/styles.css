@@ -246,6 +246,23 @@ header h1 i {
 	display: none;
 }
 
+.or-divider {
+	display: flex;
+	align-items: center;
+	text-align: center;
+	color: var(--text-secondary);
+	font-size: 0.95rem;
+	margin: 1.22rem 0;
+}
+
+.or-divider::before,
+.or-divider::after {
+	content: '';
+	flex: 1;
+	border-bottom: 1px solid var(--border-glass);
+	margin: 0 12px;
+}
+
 .app-screen {
 	display: none;
 }
@@ -282,7 +299,8 @@ header h1 i {
 
 .login-screen::before,
 .add-category-form::before,
-.add-item-form::before {
+.add-item-form::before,
+.category-card::before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -295,7 +313,8 @@ header h1 i {
 
 .login-screen:hover::before,
 .add-category-form:hover::before,
-.add-item-form:hover::before {
+.add-item-form:hover::before,
+.category-card:hover::before {
 	left: 100%;
 }
 
@@ -356,7 +375,7 @@ select {
 	font-family: inherit;
 }
 
-input:focus,
+input:not([type="checkbox"]):focus,
 select:focus {
 	outline: none;
 	border-color: var(--dsgn-b);
@@ -415,6 +434,7 @@ input::placeholder {
 }
 
 #loginBtn,
+#registerBtn,
 #addCategoryBtn,
 #addItemBtn {
 	color: white;
@@ -423,6 +443,7 @@ input::placeholder {
 }
 
 #loginBtn:hover,
+#registerBtn:hover,
 #addCategoryBtn:hover,
 #addItemBtn:hover {
 	transform: translateY(-2px);
@@ -559,9 +580,6 @@ input::placeholder {
 }
 
 .category-card:hover {
-	transform: translateY(-5px) !important;
-	/* !important sichert die Priorität */
-	transition: var(--transition) !important;
 	box-shadow: var(--shadow);
 	border-color: var(--dsgn-b);
 }
@@ -869,18 +887,6 @@ select:focus-visible {
 		animation-duration: 0.01ms !important;
 		animation-iteration-count: 1 !important;
 		transition-duration: 0.01ms !important;
-	}
-}
-
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(20px);
-	}
-
-	to {
-		opacity: 1;
-		transform: translateY(0);
 	}
 }
 
