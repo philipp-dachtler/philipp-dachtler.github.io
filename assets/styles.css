@@ -242,6 +242,13 @@ header h1 i {
 	max-width: 800px;
 }
 
+.info-box {
+	color: var(--text-secondary);
+	font-size: 0.9rem;
+	margin-top: 25px;
+	text-align: center;
+}
+
 .card-header {
 	display: none;
 }
